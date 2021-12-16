@@ -50,3 +50,20 @@ bundle install
 ```bash
 bundle exec jekyll serve
 ```
+
+
+
+### 도움이 되었던 글
+
+- https://velog.io/@zawook/Github-블로그-만들기-1
+
+- https://yceffort.notion.site/65ffa15eb0404eecb1195eff6785f3b8
+- https://wormwlrm.github.io/2020/02/23/Writing-for-developers.html
+- https://github.com/soraji/soraji.github.io
+- https://jojoldu.tistory.com/
+
+
+
+### 테마
+
+- https://github.com/ejjoo/jekyll-theme-monos
