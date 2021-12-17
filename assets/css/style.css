@@ -135,8 +135,13 @@ code {
 	margin-top: 20px;
 }
 
-.nav li {
-	margin-top: 10px;
+.nav-item-wrapper {
+	margin: 4px 0px;
+	padding: 2px 7px;
+}
+
+.nav-item-wrapper:hover {
+	background-color: #fff;
 }
 
 .nav-title {
@@ -144,13 +149,13 @@ code {
 	font-family: 'Noto Sans KR', sans-serif;
 	text-transform: uppercase;
 	border-bottom: 1px solid gray;
-	margin-bottom: 17px;
+	margin-bottom: 14px;
 }
 
 a.nav-item {
+	display: block;
 	font-size: 120%;
 	font-family: 'Noto Sans KR', sans-serif;
-	text-transform: capitalize;
 	color: #5C6060;
 }
 

@@ -14,13 +14,13 @@
 <div class="sidebar-item sidebar-nav">
 	<ul class="nav">
 		<li class="nav-title">Categories</li>
-		<li>
+		<li class="nav-item-wrapper">
 			<a class="nav-item" href="/">전체글</a>
 		</li>
 		{% for category in site.categories %}
-		<li>
+		<li class="nav-item-wrapper">
 			<a class="nav-item" href="{{ root_url }}/{{ site.category_dir }}#{{ category | first }}">
-				<span class="name">{{ category | first }}</span>
+				<span class="name">{{ category | first | capitalize }}</span>
 			</a>
 		</li>
 		{% endfor %}
