@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+
+<html lang=" en"><head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1"><link type="application/atom+xml" rel="alternate" href="https://sung1park.github.io/feed.xml" title="Sungil" /><script async src="https://www.googletagmanager.com/gtag/js?id=G-P2CF8N6DNY"></script>
+<script>
+  window['ga-disable-G-P2CF8N6DNY'] = window.doNotTrack === "1" || navigator.doNotTrack === "1" || navigator.doNotTrack === "yes" || navigator.msDoNotTrack === "1";
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { dataLayer.push(arguments); }
+  gtag('js', new Date());
+
+  gtag('config', 'G-P2CF8N6DNY');
+</script></head>
+<style>
+	@import url(/assets/css/syntax/monokai.css);
+</style>
+<title>Sungil</title>
+<link href="/assets/css/style.css" rel="stylesheet">
+
+<body>
+	<div class="container">
+		<div class="sidebar">
+			<div class="sidebar-item sidebar-header">
+	<div class='sidebar-brand'>
+		<a href="/about/">Sungil</a>
+	</div>
+	<p class="lead">TIL 정리 블로그</p></div>
+
+<div class="sidebar-item sidebar-nav">
+	<ul class="nav">
+		<li class="nav-title">Categories</li>
+		<li>
+			<a class="nav-item" href="/">전체글</a>
+		</li>
+		
+		<li>
+			<a class="nav-item" href="/category/#spring">
+				<span class="name">spring</span>
+			</a>
+		</li>
+		
+		<li>
+			<a class="nav-item" href="/category/#vue.js">
+				<span class="name">vue.js</span>
+			</a>
+		</li>
+		
+		</nav>
+	</ul>
+</div>
+
+<div class="sidebar-item sidebar-footer">
+	<p>Powered by <a href="https://github.com/jekyll/jekyll">Jekyll</a></p>
+</div>
+		</div>
+		<div class="content">
+			<article class="post">
+	<header class="post-header">
+		<div class="post-title"> 
+			[Vue.js] Directives
+		</div>
+		<time class="post-date dt-published" datetime="2021-11-09T18:00:00+09:00" itemprop="datePublished">2021/11/09
+		</time>		
+	</header>
+
+	<div class="post-content">
+		<h1 id="vue-directives">Vue Directives</h1>
+
+<blockquote>
+  <p>Vue의 지시자</p>
+</blockquote>
+
+<ul>
+  <li>데이터 바인딩의 기본 형태는 ‘Mustache’ 구문 ``</li>
+</ul>
+
+<h3 id="v-once">v-once</h3>
+
+<div class="language-vue highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;span</span> <span class="na">v-once</span><span class="nt">&gt;</span>다시는 변경하지 않겠습니다. : <span class="nt">&lt;/span&gt;</span>
+</code></pre></div></div>
+
+<ul>
+  <li>데이터 변경 시 업데이트 되지 않는 DOM을 지정</li>
+</ul>
+
+<h3 id="v-text-v-html">v-text, v-html</h3>
+
+<div class="language-vue highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"app"</span><span class="nt">&gt;</span>
+    <span class="c">&lt;!-- msg: &lt;h2&gt;Hello Vue!&lt;/h2&gt; --&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">v-text=</span><span class="s">"'msg: ' + msg"</span><span class="nt">&gt;&lt;/div&gt;</span>
+    <span class="c">&lt;!-- Hello Vue! --&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">v-html=</span><span class="s">"msg"</span><span class="nt">&gt;&lt;/div&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;</span><span class="k">script</span><span class="nt">&gt;</span>
+	<span class="p">...</span>
+    <span class="nx">msg</span><span class="p">:</span> <span class="dl">'</span><span class="s1">&lt;h2&gt;Hello Vue!&lt;/h2&gt;</span><span class="dl">'</span>
+    <span class="p">...</span>
+<span class="nt">&lt;/</span><span class="k">script</span><span class="nt">&gt;</span>
+</code></pre></div></div>
+
+<ul>
+  <li><code class="highlighter-rouge">v-text</code>는 data의 변수를 불러오지만 텍스트 그 자체로 가져옴</li>
+  <li><code class="highlighter-rouge">v-html</code>은 data의 변수를 html로 가져옴</li>
+</ul>
+
+<p>:white_check_mark: <code class="highlighter-rouge">v-html</code>은 사용자가 입력한 것을 html로 이용할 수 있어, 프로그램의 안전이나, 보안상의 이유로 지양한다</p>
+
+<h3 id="v-model">v-model</h3>
+
+<div class="language-vue highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">'text'</span> <span class="na">v-model=</span><span class="s">'message'</span><span class="nt">&gt;</span>
+입력 메세지 : 
+</code></pre></div></div>
+
+<ul>
+  <li>form의 input, textarea 같은 곳에 양방향 바인딩 처리를 위해 사용</li>
+</ul>
+
+<h3 id="v-bind">v-bind</h3>
+
+<div class="language-vue highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"app"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;a</span> <span class="na">v-bind:href=</span><span class="s">"link1"</span><span class="nt">&gt;</span>네이버로 가기<span class="nt">&lt;/a&gt;</span>
+    <span class="nt">&lt;a</span> <span class="na">:href=</span><span class="s">"link1"</span><span class="nt">&gt;</span>네이버로 가기<span class="nt">&lt;/a&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">v-bind:[key]=</span><span class="s">"value"</span><span class="nt">&gt;&lt;/div&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;</span><span class="k">script</span><span class="nt">&gt;</span>
+	<span class="p">...</span>
+    <span class="nx">key</span><span class="p">:</span> <span class="dl">'</span><span class="s1">id</span><span class="dl">'</span><span class="p">,</span>
+    <span class="nx">value</span><span class="p">:</span> <span class="dl">'</span><span class="s1">linkToNaver</span><span class="dl">'</span><span class="p">,</span>
+    <span class="nx">link1</span><span class="p">:</span> <span class="dl">'</span><span class="s1">https://www.naver.com</span><span class="dl">'</span><span class="p">,</span>
+	<span class="p">...</span>
+<span class="nt">&lt;/</span><span class="k">script</span><span class="nt">&gt;</span>
+</code></pre></div></div>
+
+<ul>
+  <li>data의 변수와 바인딩 처리를 위해 사용</li>
+  <li>약어로 <code class="highlighter-rouge">:</code> 사용 가능</li>
+  <li><code class="highlighter-rouge">[&lt;attrname&gt;]</code>을 통해 속성 명을 변수에서 가져올 수 있음. 이 때 속성 값도 변수에 있어야 함</li>
+</ul>
+
+<h3 id="v-show">v-show</h3>
+
+<div class="language-vue highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"app"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">v-show=</span><span class="s">"isShow"</span><span class="nt">&gt;&lt;/div&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;</span><span class="k">script</span><span class="nt">&gt;</span>
+	<span class="p">...</span>
+    <span class="nx">isShow</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="nx">msg</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Hello!</span><span class="dl">'</span>
+    <span class="p">...</span>
+<span class="nt">&lt;/</span><span class="k">script</span><span class="nt">&gt;</span>
+</code></pre></div></div>
+
+<ul>
+  <li><code class="highlighter-rouge">v-show="condition"</code>에서 조건이 true면 화면에 보이고, false면 화면에서 숨김</li>
+  <li>css의 <code class="highlighter-rouge">display: none</code>과 같이 작용</li>
+</ul>
+
+<h3 id="v-if-v-else-if-v-else">v-if, v-else-if, v-else</h3>
+
+<div class="language-vue highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"app"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;div&gt;</span>
+        <span class="nt">&lt;span&gt;</span>나이: <span class="nt">&lt;/span&gt;</span>
+        <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"number"</span> <span class="na">v-model=</span><span class="s">"age"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;div&gt;</span>
+        <span class="nt">&lt;span&gt;</span>요금: <span class="nt">&lt;/span&gt;</span>
+        <span class="nt">&lt;span</span> <span class="na">v-if=</span><span class="s">"age &lt; 10"</span><span class="nt">&gt;</span>3000원<span class="nt">&lt;/span&gt;</span>
+        <span class="nt">&lt;span</span> <span class="na">v-else-if=</span><span class="s">"age &lt; 20"</span><span class="nt">&gt;</span>7000원<span class="nt">&lt;/span&gt;</span>
+        <span class="nt">&lt;span</span> <span class="na">v-else-if=</span><span class="s">"age &lt; 65"</span><span class="nt">&gt;</span>10000원<span class="nt">&lt;/span&gt;</span>
+        <span class="nt">&lt;span</span> <span class="na">v-else</span><span class="nt">&gt;</span>무료<span class="nt">&lt;/span&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;</span><span class="k">script</span><span class="nt">&gt;</span>
+	<span class="p">...</span>
+    	<span class="nx">age</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="p">...</span>
+<span class="nt">&lt;/</span><span class="k">script</span><span class="nt">&gt;</span>
+</code></pre></div></div>
+
+<ul>
+  <li><code class="highlighter-rouge">if</code> ~ <code class="highlighter-rouge">else if</code> ~ <code class="highlighter-rouge">else</code> 구문</li>
+  <li>조건에 맞는 요소들만 보여준다는 점에서 v-show와 비슷하지만, v-show와는 다르게 조건이 false일 경우 엘리먼트를 렌더링하지 않고 조건 변경 시 삭제한다</li>
+  <li>template를 지원한다</li>
+</ul>
+
+<h3 id="v-for">v-for</h3>
+
+<div class="language-vue highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"app"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;ul&gt;</span>
+        <span class="nt">&lt;li</span> <span class="na">v-for=</span><span class="s">"(item, index) in items"</span> <span class="na">:key=</span><span class="s">"index"</span><span class="nt">&gt;</span>
+        	 : 
+        <span class="nt">&lt;/li&gt;</span>
+    <span class="nt">&lt;/ul&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;</span><span class="k">script</span><span class="nt">&gt;</span>
+	<span class="p">...</span>
+    <span class="nx">items</span> <span class="o">=</span> <span class="p">[</span>
+    	<span class="nx">item1</span><span class="p">:</span> <span class="p">{</span> <span class="nl">key1</span><span class="p">:</span> <span class="nx">value1</span><span class="p">,</span> <span class="nx">key2</span><span class="p">,</span> <span class="nx">value2</span><span class="p">,</span> <span class="p">...</span> <span class="p">}</span>
+        <span class="p">...</span>
+    <span class="p">]</span>
+    <span class="p">...</span>
+<span class="nt">&lt;/</span><span class="k">script</span><span class="nt">&gt;</span>
+</code></pre></div></div>
+
+<ul>
+  <li>
+    <p>key를 왜 써야 하는가?</p>
+
+    <ul>
+      <li>Vue가 예측 가능하게 작동하도록 하기 위해 (Edge case에서)</li>
+      <li>일반적으로 <u>유일값</u>을 지정</li>
+      <li>https://kr.vuejs.org/v2/style-guide/#v-for-%EC%97%90-key-%EC%A7%80%EC%A0%95-%ED%95%84%EC%88%98</li>
+    </ul>
+  </li>
+  <li>
+    <p>v-if와 v-for를 같이 쓰지 말것</p>
+
+    <ul>
+      <li>
+        <p>https://kr.vuejs.org/v2/style-guide/#v-if%EC%99%80-v-for%EB%A5%BC-%EB%8F%99%EC%8B%9C%EC%97%90-%EC%82%AC%EC%9A%A9%ED%95%98%EC%A7%80-%EB%A7%88%EC%84%B8%EC%9A%94-%ED%95%84%EC%88%98</p>
+      </li>
+      <li>
+        <p>Vue가 directive를 처리할 때 v-for가 v-if보다 우선순위가 높음</p>
+      </li>
+      <li>
+        <p>쓸데 없는 for문을 만들어 조건에 맞지 않는 항목을 삭제하다 보니 성능이 떨어짐</p>
+      </li>
+      <li>
+        <p>‘computed’ 속성을 이용하기</p>
+
+        <div class="language-vue highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">&lt;!-- items의 객체들 중 data의 key의 value값과 같은 객체들을 찾아냄 --&gt;</span>
+computed: {
+	matchItems: function() {
+		return this.items.filter(item =&gt; item.key === this.key)
+	}
+}
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="template">template</h3>
+
+<div class="language-vue highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="k">template</span> <span class="na">v-if=</span><span class="s">"count % 2 == 0"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;span&gt;</span>여러개의 태그를 묶어서 처리해야 할 경우<span class="nt">&lt;/span&gt;</span>
+	<span class="nt">&lt;span&gt;</span>각각의 태그에 v-if를 달 필요가 없다<span class="nt">&lt;/span&gt;</span>
+<span class="nt">&lt;/</span><span class="k">template</span><span class="nt">&gt;</span>
+</code></pre></div></div>
+
+<ul>
+  <li>여러개의 태그를 묶어서 처리해야 할 경우 사용한다</li>
+</ul>
+
+<h3 id="v-cloak">v-cloak</h3>
+
+<div class="language-vue highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="k">style</span><span class="nt">&gt;</span>
+    <span class="o">[</span><span class="nt">v-cloak</span><span class="o">]</span><span class="nd">::before</span> <span class="p">{</span>
+        <span class="nl">content</span><span class="p">:</span> <span class="s2">'로딩중,,,'</span><span class="p">,</span>
+    <span class="p">}</span>
+<span class="nt">&lt;/</span><span class="k">style</span><span class="nt">&gt;</span>
+<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"app"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">v-cloak</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;h1&gt;</span>  <span class="nt">&lt;/h1&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Vue instance가 준비될 때 까지 mustache 바인딩을 숨기는데 사용한다</li>
+</ul>
+
+<h3 id="v-on">v-on</h3>
+
+<ul>
+  <li>Vue Event Listener. 약어로 <code class="highlighter-rouge">@</code> 사용</li>
+  <li>메서드의 이름을 받아 처리하며, 필요한 경우 패러미터를 넘겨줄 수 있음</li>
+</ul>
+
+<div class="language-vue highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;button</span> <span class="na">v-on:click=</span><span class="s">"greet1('HELLO')"</span><span class="nt">&gt;</span>Greet<span class="nt">&lt;/button&gt;</span>
+<span class="nt">&lt;button</span> <span class="na">v-on:click=</span><span class="s">"greet2($event, 'Hello')"</span><span class="nt">&gt;</span>Greet<span class="nt">&lt;/button&gt;</span>
+</code></pre></div></div>
+
+<h5 id="event-modifier">Event modifier</h5>
+
+<ul>
+  <li>‘prevent’로 <code class="highlighter-rouge">form~submit</code>이나 <code class="highlighter-rouge">a</code>태그의 기본 동작을 막을 수 있음
+    <ul>
+      <li><code class="highlighter-rouge">e.preventDefault()</code></li>
+      <li><code class="highlighter-rouge">@click.prevent="..."</code></li>
+    </ul>
+  </li>
+</ul>
+
+<h5 id="key-event">Key Event</h5>
+
+<ul>
+  <li>다음과 같이 key에 이벤트를 줄 수 있음
+    <ul>
+      <li><code class="highlighter-rouge">@keyup</code>, <code class="highlighter-rouge">@keyup.13</code></li>
+      <li><code class="highlighter-rouge">@keyup.enter</code>, <code class="highlighter-rouge">@keyup.tab</code>, …</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="ref-refs">ref, $refs</h3>
+
+<div class="language-vue highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">v-model=</span><span class="s">"id"</span> <span class="na">ref=</span><span class="s">"id"</span> <span class="err">@</span><span class="na">keyup=</span><span class="s">"idCheck"</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;</span><span class="k">script</span><span class="nt">&gt;</span>
+<span class="p">...</span>
+<span class="nx">methods</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nx">idCheck</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">$refs</span><span class="p">.</span><span class="nx">id</span><span class="p">.</span><span class="nx">focus</span><span class="p">();</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">dir</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">$refs</span><span class="p">.</span><span class="nx">id</span><span class="p">);</span>
+        <span class="p">...</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="p">...</span>
+<span class="nt">&lt;/</span><span class="k">script</span><span class="nt">&gt;</span>
+</code></pre></div></div>
+
+<ul>
+  <li><code class="highlighter-rouge">$refs</code>를 이용해 DOM에 접근 가능</li>
+  <li>Vue의 중요한 목적 중 하나는 개발자가 DOM을 직접 다루지 않게 하는 것이기에, 되도록 <code class="highlighter-rouge">ref</code>를 사용하는 것보다는 Vue 객체를 이용하는 것이 좋다</li>
+</ul>
+
+<h3 id="class-bind">Class bind</h3>
+
+<div class="language-vue highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;div</span> <span class="na">v-bind:class=</span><span class="s">"{active: isActive}"</span><span class="nt">&gt;</span>VueCSS적용<span class="nt">&lt;/div&gt;</span>
+</code></pre></div></div>
+
+<ul>
+  <li>위의 예에서 <code class="highlighter-rouge">isActive</code>는 <code class="highlighter-rouge">boolean</code>형 뷰 객체이다. true/false 값에 따라 active 여부가 결정된다</li>
+</ul>
+
+<h3 id="form-input-binding">Form Input binding</h3>
+
+<h5 id="form-수식어">form-수식어</h5>
+
+<ul>
+  <li><code class="highlighter-rouge">v-model.trim</code> : 키 이벤트 발생 시 앞 뒤 공백 트림</li>
+  <li><code class="highlighter-rouge">v-model.lazy</code> : 기본적으로 v-model은 key stroke 발생 시 동기화 하는데, lazy를 이용해 change 이벤트에 동기화 하도록 할 수 있음</li>
+  <li><code class="highlighter-rouge">v-model.number</code> : 사용자 입력을 자동으로 숫자로 형변환</li>
+</ul>
+
+<h5 id="form-text-textarea">form-text, textarea</h5>
+
+<ul>
+  <li>text : 내부에 ``로 값 출력 가능</li>
+  <li>textarea : 내부에 ``을 사용할 수 없어, v-model을 사용</li>
+</ul>
+
+<h5 id="form-checkbox">form-checkbox</h5>
+
+<ul>
+  <li>
+    <p>하나의 체크박스는 단일 boolean 값을 가짐</p>
+  </li>
+  <li>
+    <p>true-value, false-value 값을 지정할 수 있음</p>
+  </li>
+  <li>
+    <p>v-model 값이 같은 체크박스의 값들은 하나의 배열에 값이 알아서 추가됨</p>
+
+    <div class="language-vue highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"app"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;div&gt;</span>당신이 가고 싶은 지역을 선택하시오<span class="nt">&lt;/div&gt;</span>
+  <span class="nt">&lt;div&gt;</span>  
+    <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"checkbox"</span> <span class="na">id=</span><span class="s">"seoul"</span> <span class="na">value=</span><span class="s">"서울"</span> <span class="na">v-model=</span><span class="s">"checkedAreas"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">"seoul"</span><span class="nt">&gt;</span>서울<span class="nt">&lt;/label&gt;</span>
+    <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"checkbox"</span> <span class="na">id=</span><span class="s">"daejeon"</span> <span class="na">value=</span><span class="s">"대전"</span> <span class="na">v-model=</span><span class="s">"checkedAreas"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">"daejeon"</span><span class="nt">&gt;</span>대전<span class="nt">&lt;/label&gt;</span>
+    <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"checkbox"</span> <span class="na">id=</span><span class="s">"daegu"</span> <span class="na">value=</span><span class="s">"대구"</span> <span class="na">v-model=</span><span class="s">"checkedAreas"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">"daegu"</span><span class="nt">&gt;</span>대구<span class="nt">&lt;/label&gt;</span>
+    <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"checkbox"</span> <span class="na">id=</span><span class="s">"busan"</span> <span class="na">value=</span><span class="s">"부산"</span> <span class="na">v-model=</span><span class="s">"checkedAreas"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">"busan"</span><span class="nt">&gt;</span>부산<span class="nt">&lt;/label&gt;</span>
+    <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"checkbox"</span> <span class="na">id=</span><span class="s">"jeju"</span> <span class="na">value=</span><span class="s">"제주"</span> <span class="na">v-model=</span><span class="s">"checkedAreas"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">"jeju"</span><span class="nt">&gt;</span>제주<span class="nt">&lt;/label&gt;</span>
+  <span class="nt">&lt;/div&gt;</span>
+  <span class="nt">&lt;span&gt;</span>체크한 지역: <span class="nt">&lt;/span&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;</span><span class="k">script</span><span class="nt">&gt;</span>
+  <span class="k">new</span> <span class="nx">Vue</span><span class="p">({</span>
+    <span class="na">el</span><span class="p">:</span> <span class="dl">'</span><span class="s1">#app</span><span class="dl">'</span><span class="p">,</span>
+    <span class="na">data</span><span class="p">:</span> <span class="p">{</span>
+      <span class="na">checkedAreas</span><span class="p">:</span> <span class="p">[],</span>
+    <span class="p">},</span>
+  <span class="p">});</span>
+<span class="nt">&lt;/</span><span class="k">script</span><span class="nt">&gt;</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h5 id="form-radio">form-radio</h5>
+
+<ul>
+  <li>
+    <p>Vue 객체의 변수값을 설정하고 v-model을 이용하면 초기 선택 항목을 지정할 수 있음</p>
+
+    <div class="language-vue highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"app"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;div&gt;</span>당신이 가고 싶은 지역을 선택하시오<span class="nt">&lt;/div&gt;</span>
+  <span class="nt">&lt;div&gt;</span>  
+    <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"radio"</span> <span class="na">id=</span><span class="s">"seoul"</span> <span class="na">value=</span><span class="s">"서울"</span> <span class="na">v-model=</span><span class="s">"checkedArea"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">"seoul"</span><span class="nt">&gt;</span>서울<span class="nt">&lt;/label&gt;</span>
+    <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"radio"</span> <span class="na">id=</span><span class="s">"daejeon"</span> <span class="na">value=</span><span class="s">"대전"</span> <span class="na">v-model=</span><span class="s">"checkedArea"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">"daejeon"</span><span class="nt">&gt;</span>대전<span class="nt">&lt;/label&gt;</span>
+    <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"radio"</span> <span class="na">id=</span><span class="s">"daegu"</span> <span class="na">value=</span><span class="s">"대구"</span> <span class="na">v-model=</span><span class="s">"checkedArea"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">"daegu"</span><span class="nt">&gt;</span>대구<span class="nt">&lt;/label&gt;</span>
+    <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"radio"</span> <span class="na">id=</span><span class="s">"busan"</span> <span class="na">value=</span><span class="s">"부산"</span> <span class="na">v-model=</span><span class="s">"checkedArea"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">"busan"</span><span class="nt">&gt;</span>부산<span class="nt">&lt;/label&gt;</span>
+    <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"radio"</span> <span class="na">id=</span><span class="s">"jeju"</span> <span class="na">value=</span><span class="s">"제주"</span> <span class="na">v-model=</span><span class="s">"checkedArea"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">"jeju"</span><span class="nt">&gt;</span>제주<span class="nt">&lt;/label&gt;</span>
+  <span class="nt">&lt;/div&gt;</span>
+  <span class="nt">&lt;span&gt;</span>선택한 지역 : <span class="nt">&lt;/span&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;</span><span class="k">script</span><span class="nt">&gt;</span>
+  <span class="k">new</span> <span class="nx">Vue</span><span class="p">({</span>
+    <span class="na">el</span><span class="p">:</span> <span class="dl">'</span><span class="s1">#app</span><span class="dl">'</span><span class="p">,</span>
+    <span class="na">data</span><span class="p">:</span> <span class="p">{</span>
+      <span class="na">checkedArea</span><span class="p">:</span> <span class="dl">'</span><span class="s1">제주</span><span class="dl">'</span><span class="p">,</span>
+    <span class="p">},</span>
+  <span class="p">});</span>
+<span class="nt">&lt;/</span><span class="k">script</span><span class="nt">&gt;</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h5 id="form-select">form-select</h5>
+
+<ul>
+  <li>
+    <p>select-option의 multiple 속성을 통해 다중 선택 가능</p>
+
+    <div class="language-vue highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"app"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;div&gt;</span>
+    <span class="nt">&lt;p&gt;</span>여행하고 싶은 지역을 선택하세요. (다중선택 가능)<span class="nt">&lt;/p&gt;</span>
+    <span class="nt">&lt;select</span> <span class="na">v-model=</span><span class="s">"selectedArea"</span> <span class="na">multiple</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;option</span> <span class="na">disabled</span> <span class="na">value=</span><span class="s">""</span><span class="nt">&gt;</span>선택하세요<span class="nt">&lt;/option&gt;</span>
+      <span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">"seoul"</span><span class="nt">&gt;</span>서울<span class="nt">&lt;/option&gt;</span>
+      <span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">"daejeon"</span><span class="nt">&gt;</span>대전<span class="nt">&lt;/option&gt;</span>
+      <span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">"daegu"</span><span class="nt">&gt;</span>대구<span class="nt">&lt;/option&gt;</span>
+      <span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">"busan"</span><span class="nt">&gt;</span>부산<span class="nt">&lt;/option&gt;</span>
+      <span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">"jeju"</span><span class="nt">&gt;</span>제주<span class="nt">&lt;/option&gt;</span>
+    <span class="nt">&lt;/select&gt;</span>
+  <span class="nt">&lt;/div&gt;</span>
+  <span class="nt">&lt;span&gt;</span>선택한 지역 : <span class="nt">&lt;/span&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;</span><span class="k">script</span><span class="nt">&gt;</span>
+  <span class="k">new</span> <span class="nx">Vue</span><span class="p">({</span>
+    <span class="na">el</span><span class="p">:</span> <span class="dl">'</span><span class="s1">#app</span><span class="dl">'</span><span class="p">,</span>
+    <span class="na">data</span><span class="p">:</span> <span class="p">{</span>
+      <span class="na">selectedArea</span><span class="p">:</span> <span class="p">[],</span>
+    <span class="p">},</span>
+  <span class="p">});</span>
+<span class="nt">&lt;/</span><span class="k">script</span><span class="nt">&gt;</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+
+	</div>
+</article>
+		</div>
+	</div>
+</body>
+
+</html>

@@ -56,65 +56,69 @@
 		</div>
 		<div class="content">
 			<article class="post">
-	<header class="post-header home">
+	<header class="post-header">
 		<div class="post-title"> 
-			About
+			[Vue.js] Module
 		</div>
+		<time class="post-date dt-published" datetime="2021-11-09T18:00:00+09:00" itemprop="datePublished">2021/11/09
+		</time>		
 	</header>
 
 	<div class="post-content">
-		<h2 id="til-정리-블로그">TIL 정리 블로그</h2>
+		<h1 id="module">Module</h1>
+
 <blockquote>
-  <p>매일 공부한 것을 기록하는 블로그입니다.</p>
+  <p>모듈이란?, 모듈을 가져오고 사용하는 방법</p>
 </blockquote>
 
-<h3 id="고쳐야-할-것">고쳐야 할 것</h3>
+<h3 id="module-이란">Module 이란?</h3>
 
 <ul>
-  <li>반응형</li>
-  <li>코드 폰트</li>
-  <li>코드 창</li>
-  <li>애니메이션</li>
-  <li>기타 CSS</li>
-  <li>파일 정리하기</li>
+  <li>프로그램을 기능별로 여러 개의 파일로 나누는 형태</li>
 </ul>
 
-<h3 id="일정">일정</h3>
+<h3 id="module-시스템">Module 시스템</h3>
 
 <ul>
-  <li>~17日 블로그 세부 디자인 수정하기, 기존 TIL 옮기기, CSS Flex til 작성하기</li>
-  <li>~19日 블로그 세부 디자인 수정하기, 반응형 페이지 만들어보기</li>
+  <li>CommonJS (NodeJS) - 웹 브라우저 밖에서도 동작될 수 있는 모듈 규칙 설립</li>
+  <li>AMD (Asynchronous Module Definition) - 비동기적으로 모듈을 로딩</li>
+  <li><u>ESM (ECMAScript Module, ECMA215, es6)</u> - 자바스크립트 자체 모듈</li>
 </ul>
 
-<h3 id="로컬에서-실행하는-방법">로컬에서 실행하는 방법</h3>
+<h3 id="module-정의-및-사용-방법-1">Module 정의 및 사용 방법 1</h3>
 
-<h5 id="install">install</h5>
+<h5 id="내보내기--export">내보내기 : export</h5>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bundle <span class="nb">install</span>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>const title = '계산기 모듈';
+function add(i, j) { return i+j; }
+function sub(i, j) { return i-j; }
+export {title, add, sub}
 </code></pre></div></div>
 
-<h5 id="run">run</h5>
+<h5 id="가져오기--import">가져오기 : import</h5>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bundle <span class="nb">exec </span>jekyll serve
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import {title, add, sub} from &lt;파일명&gt;;
 </code></pre></div></div>
 
-<h3 id="도움이-되었던-글">도움이 되었던 글</h3>
+<h3 id="module-정의-및-사용-방법-2">Module 정의 및 사용 방법 2</h3>
 
-<ul>
-  <li>
-    <p>https://velog.io/@zawook/Github-블로그-만들기-1</p>
-  </li>
-  <li>https://yceffort.notion.site/65ffa15eb0404eecb1195eff6785f3b8</li>
-  <li>https://wormwlrm.github.io/2020/02/23/Writing-for-developers.html</li>
-  <li>https://github.com/soraji/soraji.github.io</li>
-  <li>https://jojoldu.tistory.com/</li>
-</ul>
+<h5 id="내보내기--export-1">내보내기 : export</h5>
 
-<h3 id="테마">테마</h3>
+<div class="language-vue highlighter-rouge"><div class="highlight"><pre class="highlight"><code>export default {
+	title = '계산기 모듈',
+	add(i, j) { return i+j; },
+	sub(i, j) { return i-j; },
+}
+</code></pre></div></div>
 
-<ul>
-  <li>https://github.com/ejjoo/jekyll-theme-monos</li>
-</ul>
+<h5 id="가져오기--import-1">가져오기 : import</h5>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import calc from &lt;파일명&gt;;
+calc.title
+calc.add(20, 10)
+calc.sub(20, 10)
+</code></pre></div></div>
+
 
 	</div>
 </article>

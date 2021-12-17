@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+
+<html lang=" en"><head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1"><link type="application/atom+xml" rel="alternate" href="https://sung1park.github.io/feed.xml" title="Sungil" /><script async src="https://www.googletagmanager.com/gtag/js?id=G-P2CF8N6DNY"></script>
+<script>
+  window['ga-disable-G-P2CF8N6DNY'] = window.doNotTrack === "1" || navigator.doNotTrack === "1" || navigator.doNotTrack === "yes" || navigator.msDoNotTrack === "1";
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { dataLayer.push(arguments); }
+  gtag('js', new Date());
+
+  gtag('config', 'G-P2CF8N6DNY');
+</script></head>
+<style>
+	@import url(/assets/css/syntax/monokai.css);
+</style>
+<title>Sungil</title>
+<link href="/assets/css/style.css" rel="stylesheet">
+
+<body>
+	<div class="container">
+		<div class="sidebar">
+			<div class="sidebar-item sidebar-header">
+	<div class='sidebar-brand'>
+		<a href="/about/">Sungil</a>
+	</div>
+	<p class="lead">TIL 정리 블로그</p></div>
+
+<div class="sidebar-item sidebar-nav">
+	<ul class="nav">
+		<li class="nav-title">Categories</li>
+		<li>
+			<a class="nav-item" href="/">전체글</a>
+		</li>
+		
+		<li>
+			<a class="nav-item" href="/category/#spring">
+				<span class="name">spring</span>
+			</a>
+		</li>
+		
+		<li>
+			<a class="nav-item" href="/category/#vue.js">
+				<span class="name">vue.js</span>
+			</a>
+		</li>
+		
+		</nav>
+	</ul>
+</div>
+
+<div class="sidebar-item sidebar-footer">
+	<p>Powered by <a href="https://github.com/jekyll/jekyll">Jekyll</a></p>
+</div>
+		</div>
+		<div class="content">
+			<article class="post">
+	<header class="post-header">
+		<div class="post-title"> 
+			[Vue.js] Bootstrap Vue
+		</div>
+		<time class="post-date dt-published" datetime="2021-11-15T18:00:00+09:00" itemprop="datePublished">2021/11/15
+		</time>		
+	</header>
+
+	<div class="post-content">
+		<h1 id="bootstrap-vue">Bootstrap Vue</h1>
+
+<blockquote>
+  <p>Vue에서 사용하는 Bootstrap</p>
+
+  <p>https://bootstrap-vue.org/docs</p>
+</blockquote>
+
+<h2 id="설치">설치</h2>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm install vue bootstrap bootstrap-vue
+</code></pre></div></div>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nx">Vue</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">vue</span><span class="dl">'</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">BootstrapVue</span><span class="p">,</span> <span class="nx">BootstrapVueIcons</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">bootstrap-vue</span><span class="dl">'</span>
+
+<span class="k">import</span> <span class="dl">'</span><span class="s1">bootstrap/dist/css/bootstrap.css</span><span class="dl">'</span>
+<span class="k">import</span> <span class="dl">'</span><span class="s1">bootstrap-vue/dist/bootstrap-vue.css</span><span class="dl">'</span>
+
+<span class="nx">Vue</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">BootstrapVue</span><span class="p">)</span>
+<span class="nx">Vue</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">BootstrapVueIcons</span><span class="p">)</span>
+</code></pre></div></div>
+
+<ul>
+  <li>npm 명령어로 설치한 후, 위 코드를 App.vue나 main.js에 넣어 bootstrap을 사용할 수 있다</li>
+</ul>
+
+<h2 id="components">Components</h2>
+
+<h3 id="table">Table</h3>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;b-table</span> <span class="na">striped</span> <span class="na">hover</span> <span class="na">:items=</span><span class="s">"items"</span><span class="nt">&gt;&lt;/b-table&gt;</span>
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">&lt;b-th&gt;</code>, <code class="highlighter-rouge">&lt;b-tr&gt;</code>을 이용해 이전과 같이 사용할 수 있음</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">data</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="p">{</span>
+    <span class="na">isBusy</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="na">fields</span><span class="p">:</span> <span class="p">[</span>
+      <span class="p">{</span> <span class="na">key</span><span class="p">:</span> <span class="dl">"</span><span class="s2">no</span><span class="dl">"</span><span class="p">,</span> <span class="na">label</span><span class="p">:</span> <span class="dl">"</span><span class="s2">글번호</span><span class="dl">"</span><span class="p">,</span> <span class="na">thStyle</span><span class="p">:</span> <span class="p">{</span> <span class="na">width</span><span class="p">:</span> <span class="dl">"</span><span class="s2">10%</span><span class="dl">"</span> <span class="p">}</span> <span class="p">},</span>
+      <span class="p">{</span> <span class="na">key</span><span class="p">:</span> <span class="dl">"</span><span class="s2">title</span><span class="dl">"</span><span class="p">,</span> <span class="na">label</span><span class="p">:</span> <span class="dl">"</span><span class="s2">제목</span><span class="dl">"</span><span class="p">,</span> <span class="na">thStyle</span><span class="p">:</span> <span class="p">{</span> <span class="na">width</span><span class="p">:</span> <span class="dl">"</span><span class="s2">50%</span><span class="dl">"</span> <span class="p">}</span> <span class="p">},</span>
+      <span class="p">{</span> <span class="na">key</span><span class="p">:</span> <span class="dl">"</span><span class="s2">writer</span><span class="dl">"</span><span class="p">,</span> <span class="na">label</span><span class="p">:</span> <span class="dl">"</span><span class="s2">작성자</span><span class="dl">"</span><span class="p">,</span> <span class="na">thStyle</span><span class="p">:</span> <span class="p">{</span> <span class="na">width</span><span class="p">:</span> <span class="dl">"</span><span class="s2">20%</span><span class="dl">"</span> <span class="p">}</span> <span class="p">},</span>
+      <span class="p">{</span> <span class="na">key</span><span class="p">:</span> <span class="dl">"</span><span class="s2">regtime</span><span class="dl">"</span><span class="p">,</span> <span class="na">label</span><span class="p">:</span> <span class="dl">"</span><span class="s2">작성일</span><span class="dl">"</span><span class="p">,</span> <span class="na">thStyle</span><span class="p">:</span> <span class="p">{</span> <span class="na">width</span><span class="p">:</span> <span class="dl">"</span><span class="s2">20%</span><span class="dl">"</span> <span class="p">}</span> <span class="p">},</span>
+    <span class="p">],</span>
+    <span class="na">articles</span><span class="p">:</span> <span class="p">[],</span>
+  <span class="p">};</span>
+<span class="p">},</span>
+</code></pre></div></div>
+
+<ul>
+  <li>data 안에서 field를 선언해 column의 세부 속성을 설정할 수 있다</li>
+  <li>테이블을 사용하는 방법은 다양하기 때문에 <a href="https://bootstrap-vue.org/docs/components">bootstrap-vue</a> 문서를 참고하면 좋다</li>
+</ul>
+
+<h3 id="grid-system">Grid System</h3>
+
+<div class="language-vue highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;b-container</span> <span class="na">class=</span><span class="s">"bv-example-row"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;b-row&gt;</span>
+    <span class="nt">&lt;b-col&gt;</span>1 of 3<span class="nt">&lt;/b-col&gt;</span>
+    <span class="nt">&lt;b-col&gt;</span>2 of 3<span class="nt">&lt;/b-col&gt;</span>
+    <span class="nt">&lt;b-col&gt;</span>3 of 3<span class="nt">&lt;/b-col&gt;</span>
+  <span class="nt">&lt;/b-row&gt;</span>
+<span class="nt">&lt;/b-container&gt;</span>
+</code></pre></div></div>
+
+<ul>
+  <li><code class="highlighter-rouge">b-container</code>, <code class="highlighter-rouge">b-row</code>, <code class="highlighter-rouge">b-col</code> 등을 이용해 이전 bootstrap과 동일하게 12열 체계의 그리드 시스템을 이용할 수 있다</li>
+</ul>
+
+	</div>
+</article>
+		</div>
+	</div>
+</body>
+
+</html>

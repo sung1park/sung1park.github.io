@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+
+<html lang=" en"><head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1"><link type="application/atom+xml" rel="alternate" href="https://sung1park.github.io/feed.xml" title="Sungil" /><script async src="https://www.googletagmanager.com/gtag/js?id=G-P2CF8N6DNY"></script>
+<script>
+  window['ga-disable-G-P2CF8N6DNY'] = window.doNotTrack === "1" || navigator.doNotTrack === "1" || navigator.doNotTrack === "yes" || navigator.msDoNotTrack === "1";
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { dataLayer.push(arguments); }
+  gtag('js', new Date());
+
+  gtag('config', 'G-P2CF8N6DNY');
+</script></head>
+<style>
+	@import url(/assets/css/syntax/monokai.css);
+</style>
+<title>Sungil</title>
+<link href="/assets/css/style.css" rel="stylesheet">
+
+<body>
+	<div class="container">
+		<div class="sidebar">
+			<div class="sidebar-item sidebar-header">
+	<div class='sidebar-brand'>
+		<a href="/about/">Sungil</a>
+	</div>
+	<p class="lead">TIL 정리 블로그</p></div>
+
+<div class="sidebar-item sidebar-nav">
+	<ul class="nav">
+		<li class="nav-title">Categories</li>
+		<li>
+			<a class="nav-item" href="/">전체글</a>
+		</li>
+		
+		<li>
+			<a class="nav-item" href="/category/#spring">
+				<span class="name">spring</span>
+			</a>
+		</li>
+		
+		<li>
+			<a class="nav-item" href="/category/#vue.js">
+				<span class="name">vue.js</span>
+			</a>
+		</li>
+		
+		</nav>
+	</ul>
+</div>
+
+<div class="sidebar-item sidebar-footer">
+	<p>Powered by <a href="https://github.com/jekyll/jekyll">Jekyll</a></p>
+</div>
+		</div>
+		<div class="content">
+			<article class="post">
+	<header class="post-header">
+		<div class="post-title"> 
+			[Spring] File Upload/Download
+		</div>
+		<time class="post-date dt-published" datetime="2021-10-22T18:00:00+09:00" itemprop="datePublished">2021/10/22
+		</time>		
+	</header>
+
+	<div class="post-content">
+		<h1 id="8-file-uploaddownload">8. File Upload/Download</h1>
+
+<blockquote>
+  <p>파일 업로드 및 다운로드</p>
+</blockquote>
+
+<h3 id="8-1-파일-업로드">8-1. 파일 업로드</h3>
+
+<h5 id="servlet-contextxml-설정">servlet-context.xml 설정</h5>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">&lt;!-- File Upload --&gt;</span>
+<span class="nt">&lt;beans:bean</span> <span class="na">id=</span><span class="s">"multipartResolver"</span> <span class="na">class=</span><span class="s">"org.springframework.web.multipart.commons.CommonsMultipartResolver"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;beans:property</span> <span class="na">name=</span><span class="s">"defaultEncoding"</span> <span class="na">value=</span><span class="s">"UTF-8"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;beans:property</span> <span class="na">name=</span><span class="s">"maxUploadSize"</span> <span class="na">value=</span><span class="s">"52428800"</span><span class="nt">/&gt;</span> 
+    <span class="nt">&lt;beans:property</span> <span class="na">name=</span><span class="s">"maxInMemorySize"</span> <span class="na">value=</span><span class="s">"1048576"</span><span class="nt">/&gt;</span> 
+<span class="nt">&lt;/beans:bean&gt;</span>
+</code></pre></div></div>
+
+<ul>
+  <li>maxUploadSize : 최대 업로드 가능한 파일의 바이트 크기</li>
+  <li>maxInMemorySize : 디스크에 임시 파일을 생성하기 전에 메모리에 보관할 수 있는 최대 바이트 크기</li>
+</ul>
+
+<h5 id="jsphtml-파일에-form-입력">jsp(html) 파일에 form 입력</h5>
+
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;form</span> <span class="na">id=</span><span class="s">"writeform"</span> <span class="na">method=</span><span class="s">"post"</span> <span class="na">enctype=</span><span class="s">"multipart/form-data"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"form-group"</span> <span class="na">align=</span><span class="s">"left"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;lable</span> <span class="na">for=</span><span class="s">"upfile"</span><span class="nt">&gt;</span>파일: <span class="nt">&lt;/lable&gt;</span>
+        <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"file"</span> <span class="na">class=</span><span class="s">"form-control"</span> <span class="na">name=</span><span class="s">"upfile"</span> <span class="na">multiple</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/form&gt;</span>
+</code></pre></div></div>
+
+<ul>
+  <li>form 태그의 enctype은 “multipart/form-data”로 설정</li>
+  <li>input 태그의 type은 “file”로 설정하고, multiple 속성을 이용해 다중 파일 입력을 지원한다</li>
+</ul>
+
+<h5 id="guestbookdto-fileinfodto">GuestBookDto, FileInfoDto</h5>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">GuestBookDto</span> <span class="o">{</span>
+	<span class="kd">private</span> <span class="kt">int</span> <span class="n">articleNo</span><span class="o">;</span>
+	<span class="kd">private</span> <span class="nc">String</span> <span class="n">userId</span><span class="o">;</span>
+	<span class="kd">private</span> <span class="nc">String</span> <span class="n">userName</span><span class="o">;</span>
+	<span class="kd">private</span> <span class="nc">String</span> <span class="n">subject</span><span class="o">;</span>
+	<span class="kd">private</span> <span class="nc">String</span> <span class="n">content</span><span class="o">;</span>
+	<span class="kd">private</span> <span class="nc">String</span> <span class="n">regTime</span><span class="o">;</span>
+	<span class="kd">private</span> <span class="nc">List</span><span class="o">&lt;</span><span class="nc">FileInfoDto</span><span class="o">&gt;</span> <span class="n">fileInfos</span><span class="o">;</span>
+</code></pre></div></div>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">FileInfoDto</span> <span class="o">{</span>
+	<span class="kd">private</span> <span class="nc">String</span> <span class="n">saveFolder</span><span class="o">;</span>
+	<span class="kd">private</span> <span class="nc">String</span> <span class="n">originFile</span><span class="o">;</span>
+	<span class="kd">private</span> <span class="nc">String</span> <span class="n">saveFile</span><span class="o">;</span>
+</code></pre></div></div>
+
+<ul>
+  <li>각각의 게시물 마다 파일 정보를 가지도록 하기 위해서 기존의 GuestBookDto를 수정하고, FileInfoDto를 추가하였다</li>
+  <li>FileInfoDto는 저장 폴더이름과 원래 파일이름, 실제 저장 파일이름을 가진다</li>
+</ul>
+
+<h5 id="guestbookcontroller">GuestBookController</h5>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@PostMapping</span><span class="o">(</span><span class="s">"/register"</span><span class="o">)</span>
+<span class="kd">public</span> <span class="nc">String</span> <span class="nf">register</span><span class="o">(</span><span class="nc">GuestBookDto</span> <span class="n">guestBookDto</span><span class="o">,</span> <span class="nd">@RequestParam</span><span class="o">(</span><span class="s">"upfile"</span><span class="o">)</span> <span class="nc">MultipartFile</span><span class="o">[]</span> <span class="n">files</span><span class="o">,</span> <span class="nc">Model</span> <span class="n">model</span><span class="o">,</span> <span class="nc">HttpSession</span> <span class="n">session</span><span class="o">,</span> <span class="nc">RedirectAttributes</span> <span class="n">redirectAttributes</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
+    <span class="nc">MemberDto</span> <span class="n">memberDto</span> <span class="o">=</span> <span class="o">(</span><span class="nc">MemberDto</span><span class="o">)</span> <span class="n">session</span><span class="o">.</span><span class="na">getAttribute</span><span class="o">(</span><span class="s">"userinfo"</span><span class="o">);</span>
+    <span class="n">guestBookDto</span><span class="o">.</span><span class="na">setUserId</span><span class="o">(</span><span class="n">memberDto</span><span class="o">.</span><span class="na">getUserId</span><span class="o">());</span>
+
+    <span class="c1">// FileUpload 관련 설정.</span>
+    <span class="n">logger</span><span class="o">.</span><span class="na">debug</span><span class="o">(</span><span class="s">"MultipartFile.isEmpty : {}"</span><span class="o">,</span> <span class="n">files</span><span class="o">[</span><span class="mi">0</span><span class="o">].</span><span class="na">isEmpty</span><span class="o">());</span>
+    <span class="k">if</span> <span class="o">(!</span><span class="n">files</span><span class="o">[</span><span class="mi">0</span><span class="o">].</span><span class="na">isEmpty</span><span class="o">())</span> <span class="o">{</span>
+        <span class="nc">String</span> <span class="n">realPath</span> <span class="o">=</span> <span class="n">servletContext</span><span class="o">.</span><span class="na">getRealPath</span><span class="o">(</span><span class="s">"/upload"</span><span class="o">);</span>
+        <span class="nc">String</span> <span class="n">today</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">SimpleDateFormat</span><span class="o">(</span><span class="s">"yyMMdd"</span><span class="o">).</span><span class="na">format</span><span class="o">(</span><span class="k">new</span> <span class="nc">Date</span><span class="o">());</span>
+        <span class="nc">String</span> <span class="n">saveFolder</span> <span class="o">=</span> <span class="n">realPath</span> <span class="o">+</span> <span class="nc">File</span><span class="o">.</span><span class="na">separator</span> <span class="o">+</span> <span class="n">today</span><span class="o">;</span>
+        <span class="nc">File</span> <span class="n">folder</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">File</span><span class="o">(</span><span class="n">saveFolder</span><span class="o">);</span>
+        <span class="k">if</span> <span class="o">(!</span><span class="n">folder</span><span class="o">.</span><span class="na">exists</span><span class="o">())</span>
+            <span class="n">folder</span><span class="o">.</span><span class="na">mkdirs</span><span class="o">();</span>
+        <span class="nc">List</span><span class="o">&lt;</span><span class="nc">FileInfoDto</span><span class="o">&gt;</span> <span class="n">fileInfos</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ArrayList</span><span class="o">&lt;</span><span class="nc">FileInfoDto</span><span class="o">&gt;();</span>
+        <span class="k">for</span> <span class="o">(</span><span class="nc">MultipartFile</span> <span class="n">mfile</span> <span class="o">:</span> <span class="n">files</span><span class="o">)</span> <span class="o">{</span>
+            <span class="nc">FileInfoDto</span> <span class="n">fileInfoDto</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">FileInfoDto</span><span class="o">();</span>
+            <span class="nc">String</span> <span class="n">originalFileName</span> <span class="o">=</span> <span class="n">mfile</span><span class="o">.</span><span class="na">getOriginalFilename</span><span class="o">();</span>
+            <span class="k">if</span> <span class="o">(!</span><span class="n">originalFileName</span><span class="o">.</span><span class="na">isEmpty</span><span class="o">())</span> <span class="o">{</span>
+                <span class="nc">String</span> <span class="n">saveFileName</span> <span class="o">=</span> <span class="no">UUID</span><span class="o">.</span><span class="na">randomUUID</span><span class="o">().</span><span class="na">toString</span><span class="o">()</span> 
+                         <span class="o">+</span> <span class="n">originalFileName</span><span class="o">.</span><span class="na">substring</span><span class="o">(</span><span class="n">originalFileName</span><span class="o">.</span><span class="na">lastIndexOf</span><span class="o">(</span><span class="sc">'.'</span><span class="o">));</span>
+                <span class="n">fileInfoDto</span><span class="o">.</span><span class="na">setSaveFolder</span><span class="o">(</span><span class="n">today</span><span class="o">);</span>
+                <span class="n">fileInfoDto</span><span class="o">.</span><span class="na">setOriginFile</span><span class="o">(</span><span class="n">originalFileName</span><span class="o">);</span>
+                <span class="n">fileInfoDto</span><span class="o">.</span><span class="na">setSaveFile</span><span class="o">(</span><span class="n">saveFileName</span><span class="o">);</span>
+                <span class="c1">// 파일이 실제 경로로 올라감</span>
+                <span class="n">mfile</span><span class="o">.</span><span class="na">transferTo</span><span class="o">(</span><span class="k">new</span> <span class="nc">File</span><span class="o">(</span><span class="n">folder</span><span class="o">,</span> <span class="n">saveFileName</span><span class="o">));</span>
+            <span class="o">}</span>
+            <span class="n">fileInfos</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">fileInfoDto</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="n">guestBookDto</span><span class="o">.</span><span class="na">setFileInfos</span><span class="o">(</span><span class="n">fileInfos</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="n">guestBookService</span><span class="o">.</span><span class="na">registerArticle</span><span class="o">(</span><span class="n">guestBookDto</span><span class="o">);</span>
+
+    <span class="n">redirectAttributes</span><span class="o">.</span><span class="na">addFlashAttribute</span><span class="o">(</span><span class="s">"msg"</span><span class="o">,</span> <span class="s">"글이 작성되었습니다."</span><span class="o">);</span>
+    <span class="k">return</span> <span class="s">"redirect:/guestbook/list?pg=1&amp;key=&amp;word="</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<ul>
+  <li>파일의 업로드 경로는 <code class="highlighter-rouge">/{프로젝트 경로}/upload/{업로드 날짜}</code>로 지정한다</li>
+  <li>업로드 하려는 경로의 폴더가 없다면 <code class="highlighter-rouge">.mkdirs()</code>로 생성한다</li>
+  <li>view에서 넘어온 파일의 개수 만큼 FileInfoDto를 만들어 파일 정보를 DTO에 입력하고 list에 담는다</li>
+  <li><code class="highlighter-rouge">mfile.transferTo(new File())</code>을 이용해 파일을 실제 경로에 올려놓는다</li>
+</ul>
+
+<h3 id="8-2-파일-다운로드">8-2. 파일 다운로드</h3>
+
+<h5 id="servlet-contextxml-설정-1">servlet-context.xml 설정</h5>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">&lt;!-- File Download --&gt;</span>
+<span class="nt">&lt;beans:bean</span> <span class="na">id=</span><span class="s">"fileDownLoadView"</span> <span class="na">class=</span><span class="s">"com.ssafy.guestbook.view.FileDownLoadView"</span><span class="nt">/&gt;</span>
+
+<span class="c">&lt;!-- BeanNameViewResolver 설정 --&gt;</span>
+<span class="nt">&lt;beans:bean</span> <span class="na">id=</span><span class="s">"fileViewResolver"</span> <span class="na">class=</span><span class="s">"org.springframework.web.servlet.view.BeanNameViewResolver"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;beans:property</span> <span class="na">name=</span><span class="s">"order"</span> <span class="na">value=</span><span class="s">"0"</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/beans:bean&gt;</span> 
+</code></pre></div></div>
+
+<h5 id="jsp-파일">jsp 파일</h5>
+
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;script&gt;</span>
+  <span class="c1">// File Download</span>
+  <span class="nx">$</span><span class="p">(</span><span class="dl">'</span><span class="s1">.filedown</span><span class="dl">'</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">alert</span><span class="p">(</span><span class="dl">"</span><span class="s2">원본 : </span><span class="dl">"</span> <span class="o">+</span> <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="dl">'</span><span class="s1">ofile</span><span class="dl">'</span><span class="p">)</span> <span class="o">+</span> <span class="dl">"</span><span class="s2">, 실제 :  </span><span class="dl">"</span> <span class="o">+</span> <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="dl">'</span><span class="s1">sfile</span><span class="dl">'</span><span class="p">));</span>
+    <span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">find</span><span class="p">(</span><span class="dl">'</span><span class="s1">[name="sfolder"]</span><span class="dl">'</span><span class="p">).</span><span class="nx">val</span><span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="dl">'</span><span class="s1">sfolder</span><span class="dl">'</span><span class="p">));</span>
+    <span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">find</span><span class="p">(</span><span class="dl">'</span><span class="s1">[name="ofile"]</span><span class="dl">'</span><span class="p">).</span><span class="nx">val</span><span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="dl">'</span><span class="s1">ofile</span><span class="dl">'</span><span class="p">));</span>
+    <span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">find</span><span class="p">(</span><span class="dl">'</span><span class="s1">[name="sfile"]</span><span class="dl">'</span><span class="p">).</span><span class="nx">val</span><span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="dl">'</span><span class="s1">sfile</span><span class="dl">'</span><span class="p">));</span>
+    <span class="nx">$</span><span class="p">(</span><span class="dl">'</span><span class="s1">#downform</span><span class="dl">'</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="dl">'</span><span class="s1">action</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">${root}/guestbook/download</span><span class="dl">'</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="dl">'</span><span class="s1">method</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">get</span><span class="dl">'</span><span class="p">).</span><span class="nx">submit</span><span class="p">();</span>
+  <span class="p">});</span>
+<span class="nt">&lt;/script&gt;</span>
+
+<span class="nt">&lt;c:if </span><span class="na">test=</span><span class="s">"</span><span class="si">${</span><span class="o">!</span><span class="n">empty</span> <span class="n">article</span><span class="o">.</span><span class="na">fileInfos</span><span class="si">}</span><span class="s">"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;tr&gt;</span>
+    <span class="nt">&lt;td</span> <span class="na">colspan=</span><span class="s">"2"</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;ul&gt;</span>
+        <span class="nt">&lt;c:forEach </span><span class="na">var=</span><span class="s">"file"</span><span class="na"> items=</span><span class="s">"</span><span class="si">${</span><span class="n">article</span><span class="o">.</span><span class="na">fileInfos</span><span class="si">}</span><span class="s">"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;li&gt;</span>${file.originFile} <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span> <span class="na">class=</span><span class="s">"filedown"</span> <span class="na">sfolder=</span><span class="s">"${file.saveFolder}"</span> 
+                        <span class="na">sfile=</span><span class="s">"${file.saveFile}"</span> <span class="na">ofile=</span><span class="s">"${file.originFile}"</span><span class="nt">&gt;</span>[다운로드]<span class="nt">&lt;/a&gt;</span>
+        <span class="nt">&lt;/c:forEach&gt;</span>
+      <span class="nt">&lt;/ul&gt;</span>
+    <span class="nt">&lt;/td&gt;</span>
+  <span class="nt">&lt;/tr&gt;</span>
+<span class="nt">&lt;/c:if&gt;</span>
+</code></pre></div></div>
+
+<h5 id="guestbookcontroller-1">GuestBookController</h5>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@GetMapping</span><span class="o">(</span><span class="s">"/download"</span><span class="o">)</span>
+<span class="kd">public</span> <span class="nc">ModelAndView</span> <span class="nf">downloadFile</span><span class="o">(</span><span class="nd">@RequestParam</span> <span class="nc">Map</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">,</span> <span class="nc">String</span><span class="o">&gt;</span> <span class="n">fileInfo</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="nf">ModelAndView</span><span class="o">(</span><span class="s">"fileDownLoadView"</span><span class="o">,</span> <span class="s">"downloadFile"</span><span class="o">,</span> <span class="n">fileInfo</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<ul>
+  <li>view에서 보낸 파일 정보를 받아 servlet-context.xml에서 설정해놓은 “fileDownloadView” 로 보낸다</li>
+  <li><code class="highlighter-rouge">ModelAndView(String viewName, String modelName, Object modelObject)</code></li>
+</ul>
+
+<h5 id="filedownloadview">FileDownloadView</h5>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">FileDownloadView</span> <span class="kd">extends</span> <span class="nc">AbstractView</span> <span class="o">{</span>
+
+    <span class="kd">public</span> <span class="nf">FileDownloadView</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">setContentType</span><span class="o">(</span><span class="s">"application/download; charset=UTF-8"</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">renderMergedOutputModel</span><span class="o">(</span><span class="nc">Map</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">,</span> <span class="nc">Object</span><span class="o">&gt;</span> <span class="n">model</span><span class="o">,</span> <span class="nc">HttpServletRequest</span> <span class="n">request</span><span class="o">,</span> <span class="nc">HttpServletResponse</span> <span class="n">response</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
+        <span class="nc">ServletContext</span> <span class="n">ctx</span> <span class="o">=</span> <span class="n">getServletContext</span><span class="o">();</span>
+        <span class="nc">String</span> <span class="n">realPath</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="na">getRealPath</span><span class="o">(</span><span class="s">"/upload"</span><span class="o">);</span>
+		
+        <span class="c1">// 전송받은 모델(파일 정보)</span>
+        <span class="nc">Map</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">,</span> <span class="nc">Object</span><span class="o">&gt;</span> <span class="n">fileInfo</span> <span class="o">=</span> <span class="o">(</span><span class="nc">Map</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">,</span> <span class="nc">Object</span><span class="o">&gt;)</span> <span class="n">model</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="s">"downloadFile"</span><span class="o">);</span> 
+
+        <span class="nc">String</span> <span class="n">saveFolder</span> <span class="o">=</span> <span class="o">(</span><span class="nc">String</span><span class="o">)</span> <span class="n">fileInfo</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="s">"sfolder"</span><span class="o">);</span> <span class="c1">// 파일 경로</span>
+        <span class="nc">String</span> <span class="n">originalFile</span> <span class="o">=</span> <span class="o">(</span><span class="nc">String</span><span class="o">)</span> <span class="n">fileInfo</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="s">"ofile"</span><span class="o">);</span> <span class="c1">// 원본 파일명</span>
+        <span class="nc">String</span> <span class="n">saveFile</span> <span class="o">=</span> <span class="o">(</span><span class="nc">String</span><span class="o">)</span> <span class="n">fileInfo</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="s">"sfile"</span><span class="o">);</span> <span class="c1">// 실제 저장된 파일명</span>
+        <span class="nc">File</span> <span class="n">file</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">File</span><span class="o">(</span><span class="n">realPath</span> <span class="o">+</span> <span class="nc">File</span><span class="o">.</span><span class="na">separator</span> <span class="o">+</span> <span class="n">saveFolder</span><span class="o">,</span> <span class="n">saveFile</span><span class="o">);</span>
+
+        <span class="n">response</span><span class="o">.</span><span class="na">setContentType</span><span class="o">(</span><span class="n">getContentType</span><span class="o">());</span>
+        <span class="n">response</span><span class="o">.</span><span class="na">setContentLength</span><span class="o">((</span><span class="kt">int</span><span class="o">)</span> <span class="n">file</span><span class="o">.</span><span class="na">length</span><span class="o">());</span>
+
+        <span class="nc">String</span> <span class="n">header</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getHeader</span><span class="o">(</span><span class="s">"User-Agent"</span><span class="o">);</span>
+        <span class="kt">boolean</span> <span class="n">isIE</span> <span class="o">=</span> <span class="n">header</span><span class="o">.</span><span class="na">indexOf</span><span class="o">(</span><span class="s">"MSIE"</span><span class="o">)</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">1</span> <span class="o">||</span> <span class="n">header</span><span class="o">.</span><span class="na">indexOf</span><span class="o">(</span><span class="s">"Trident"</span><span class="o">)</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">1</span><span class="o">;</span>
+        <span class="nc">String</span> <span class="n">fileName</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="c1">// IE는 다르게 처리</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">isIE</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">fileName</span> <span class="o">=</span> <span class="nc">URLEncoder</span><span class="o">.</span><span class="na">encode</span><span class="o">(</span><span class="n">originalFile</span><span class="o">,</span> <span class="s">"UTF-8"</span><span class="o">).</span><span class="na">replaceAll</span><span class="o">(</span><span class="s">"\\+"</span><span class="o">,</span> <span class="s">"%20"</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+            <span class="n">fileName</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">String</span><span class="o">(</span><span class="n">originalFile</span><span class="o">.</span><span class="na">getBytes</span><span class="o">(</span><span class="s">"UTF-8"</span><span class="o">),</span> <span class="s">"ISO-8859-1"</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="n">response</span><span class="o">.</span><span class="na">setHeader</span><span class="o">(</span><span class="s">"Content-Disposition"</span><span class="o">,</span> <span class="s">"attachment; filename=\""</span> <span class="o">+</span> <span class="n">fileName</span> <span class="o">+</span> <span class="s">"\";"</span><span class="o">);</span>
+        <span class="n">response</span><span class="o">.</span><span class="na">setHeader</span><span class="o">(</span><span class="s">"Content-Transfer-Encoding"</span><span class="o">,</span> <span class="s">"binary"</span><span class="o">);</span>
+        <span class="nc">OutputStream</span> <span class="n">out</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="na">getOutputStream</span><span class="o">();</span>
+        <span class="nc">FileInputStream</span> <span class="n">fis</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="n">fis</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">FileInputStream</span><span class="o">(</span><span class="n">file</span><span class="o">);</span>
+            <span class="nc">FileCopyUtils</span><span class="o">.</span><span class="na">copy</span><span class="o">(</span><span class="n">fis</span><span class="o">,</span> <span class="n">out</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+        <span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">fis</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">try</span> <span class="o">{</span>
+                    <span class="n">fis</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+                <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="n">out</span><span class="o">.</span><span class="na">flush</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<ul>
+  <li>전달받은 파일 정보를 통해 실제 경로와 파일 이름을 입력하여 <code class="highlighter-rouge">FileCopyUtils.copy(fis, out)</code>으로 파일을 클라이언트에서 다운받게 한다</li>
+</ul>
+
+
+	</div>
+</article>
+		</div>
+	</div>
+</body>
+
+</html>

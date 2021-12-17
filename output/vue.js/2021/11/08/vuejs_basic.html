@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+
+<html lang=" en"><head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1"><link type="application/atom+xml" rel="alternate" href="https://sung1park.github.io/feed.xml" title="Sungil" /><script async src="https://www.googletagmanager.com/gtag/js?id=G-P2CF8N6DNY"></script>
+<script>
+  window['ga-disable-G-P2CF8N6DNY'] = window.doNotTrack === "1" || navigator.doNotTrack === "1" || navigator.doNotTrack === "yes" || navigator.msDoNotTrack === "1";
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { dataLayer.push(arguments); }
+  gtag('js', new Date());
+
+  gtag('config', 'G-P2CF8N6DNY');
+</script></head>
+<style>
+	@import url(/assets/css/syntax/monokai.css);
+</style>
+<title>Sungil</title>
+<link href="/assets/css/style.css" rel="stylesheet">
+
+<body>
+	<div class="container">
+		<div class="sidebar">
+			<div class="sidebar-item sidebar-header">
+	<div class='sidebar-brand'>
+		<a href="/about/">Sungil</a>
+	</div>
+	<p class="lead">TIL 정리 블로그</p></div>
+
+<div class="sidebar-item sidebar-nav">
+	<ul class="nav">
+		<li class="nav-title">Categories</li>
+		<li>
+			<a class="nav-item" href="/">전체글</a>
+		</li>
+		
+		<li>
+			<a class="nav-item" href="/category/#spring">
+				<span class="name">spring</span>
+			</a>
+		</li>
+		
+		<li>
+			<a class="nav-item" href="/category/#vue.js">
+				<span class="name">vue.js</span>
+			</a>
+		</li>
+		
+		</nav>
+	</ul>
+</div>
+
+<div class="sidebar-item sidebar-footer">
+	<p>Powered by <a href="https://github.com/jekyll/jekyll">Jekyll</a></p>
+</div>
+		</div>
+		<div class="content">
+			<article class="post">
+	<header class="post-header">
+		<div class="post-title"> 
+			[Vue.js] Basics
+		</div>
+		<time class="post-date dt-published" datetime="2021-11-08T18:00:00+09:00" itemprop="datePublished">2021/11/08
+		</time>		
+	</header>
+
+	<div class="post-content">
+		<h1 id="vuejs">Vue.js</h1>
+
+<blockquote>
+  <p>Javascript Framework</p>
+</blockquote>
+
+<h3 id="mvvm-패턴">MVVM 패턴</h3>
+
+<p><img src="/assets/img/mvvm.png" alt="MVVM" /></p>
+
+<ul>
+  <li>Model + View + ViewModel</li>
+  <li>Model : 순수 자바스크립트 객체</li>
+  <li>View : 웹페이지의 DOM</li>
+  <li>ViewModel : Vue의 역할</li>
+</ul>
+
+<p><img src="/assets/img/mvcmvvm.png" alt="mvcmvvm" /></p>
+
+<ul>
+  <li>기존에는 자바스크립트로 view에 해당하는 DOM에 접근함거나 수정하기 위해 jQuery와 같은 라이브러리를 이용</li>
+  <li>Vue는 view와 Model을 연결하고 자동으로 바인딩 하므로 양방향 통신을 가능하게 함</li>
+</ul>
+
+<h3 id="vuejs-설치">Vue.js 설치</h3>
+
+<ul>
+  <li><code class="highlighter-rouge">&lt;script&gt;</code> include (Download, CDN)</li>
+  <li>NPM</li>
+  <li>CLI</li>
+</ul>
+
+<h3 id="chrome-extension">Chrome Extension</h3>
+
+<ul>
+  <li>Vue.js devtools
+    <ul>
+      <li>크롬에서 디버깅 할 수 있음</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="vue-instance-생성">Vue Instance 생성</h3>
+
+<div class="language-vue highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="k">script</span><span class="nt">&gt;</span>
+	<span class="k">new</span> <span class="nx">Vue</span><span class="p">({</span>
+        <span class="na">el</span><span class="p">:</span> <span class="dl">'</span><span class="s1">#app</span><span class="dl">'</span><span class="p">,</span>
+        <span class="nx">data</span><span class="p">()</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="p">{</span>
+                <span class="na">message</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Hello Vue!</span><span class="dl">'</span><span class="p">,</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">})</span>
+<span class="nt">&lt;/</span><span class="k">script</span><span class="nt">&gt;</span>
+</code></pre></div></div>
+
+<h5 id="속성">속성</h5>
+
+<ul>
+  <li><code class="highlighter-rouge">el</code>: Vue가 적용될 요소 지정</li>
+  <li><code class="highlighter-rouge">data</code>: Vue에서 사용되는 정보 저장. 객체 또는 함수 형태</li>
+  <li><code class="highlighter-rouge">template</code>: 화면에 표시할 html, css 등의 마크업 요소를 정의하는 속성</li>
+  <li><code class="highlighter-rouge">methods</code>: 화면 로직 제어와 관계된 method를 정의하는 속성. 이벤트 처리나 화면 동작과 관련된 로직을 추가</li>
+  <li>Life cycle에 맞춰 실행되는 함수들</li>
+</ul>
+
+<h3 id="vue-instance의-유효-범위">Vue Instance의 유효 범위</h3>
+
+<ul>
+  <li>el 속성에</li>
+</ul>
+
+<h3 id="life-cycle">Life Cycle</h3>
+
+<p><img src="/assets/img/image-20211104171659932.png" alt="image-20211104171659932" /></p>
+
+<h5 id="life-cycle-hook">Life Cycle Hook</h5>
+
+<ul>
+  <li>beforeCreate : Vue Instance가 생성되고 각 정보의 설정 전에 호출</li>
+  <li>created : Vue Instance가 생성된 후 데이터들의 설정이 완료된 후 호출</li>
+  <li>beforeMount : 마운트가 시작되기 전에 호출</li>
+  <li>mounted : 지정된 element에 Vue Instance 데이터가 마운트 된 후에 호출</li>
+  <li>beforeUpdate : 데이터가 변경될 때 virtual DOM이 랜더링</li>
+  <li>updated : Vue에서 관리되는 데이터가 변경되어 DOM이 업데이트 된 상태</li>
+  <li>beforeDestroy : Vue Instance가 제거되기 전에 호출</li>
+  <li>destroyed : Vue Instance가 제거된 후 호출</li>
+</ul>
+
+<h3 id="vue-객체-내의-변수에-접근하기">Vue 객체 내의 변수에 접근하기</h3>
+
+<div class="language-vue highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="k">script</span><span class="nt">&gt;</span>
+  <span class="kd">const</span> <span class="nx">vm</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Vue</span> <span class="p">({</span>
+    <span class="na">el</span><span class="p">:</span> <span class="dl">'</span><span class="s1">#app</span><span class="dl">'</span><span class="p">,</span>
+    <span class="nx">data</span><span class="p">()</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="p">{</span>
+        <span class="p">...</span>
+      <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="nx">methods</span><span class="p">()</span> <span class="p">{</span>
+      <span class="p">...</span>
+    <span class="p">},</span>
+  <span class="p">})</span>
+<span class="nt">&lt;/</span><span class="k">script</span><span class="nt">&gt;</span>
+</code></pre></div></div>
+
+<ul>
+  <li>위와 같이 Vue 인스턴스에 이름을 붙이고 <code class="highlighter-rouge">vm.method()</code> 혹은 <code class="highlighter-rouge">vm.variable</code>로 내부 변수나 메서드에 접근할 수 있다.</li>
+</ul>
+
+	</div>
+</article>
+		</div>
+	</div>
+</body>
+
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+
+<html lang=" en"><head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1"><link type="application/atom+xml" rel="alternate" href="https://sung1park.github.io/feed.xml" title="Sungil" /><script async src="https://www.googletagmanager.com/gtag/js?id=G-P2CF8N6DNY"></script>
+<script>
+  window['ga-disable-G-P2CF8N6DNY'] = window.doNotTrack === "1" || navigator.doNotTrack === "1" || navigator.doNotTrack === "yes" || navigator.msDoNotTrack === "1";
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { dataLayer.push(arguments); }
+  gtag('js', new Date());
+
+  gtag('config', 'G-P2CF8N6DNY');
+</script></head>
+<style>
+	@import url(/assets/css/syntax/monokai.css);
+</style>
+<title>Sungil</title>
+<link href="/assets/css/style.css" rel="stylesheet">
+
+<body>
+	<div class="container">
+		<div class="sidebar">
+			<div class="sidebar-item sidebar-header">
+	<div class='sidebar-brand'>
+		<a href="/about/">Sungil</a>
+	</div>
+	<p class="lead">TIL 정리 블로그</p></div>
+
+<div class="sidebar-item sidebar-nav">
+	<ul class="nav">
+		<li class="nav-title">Categories</li>
+		<li>
+			<a class="nav-item" href="/">전체글</a>
+		</li>
+		
+		<li>
+			<a class="nav-item" href="/category/#spring">
+				<span class="name">spring</span>
+			</a>
+		</li>
+		
+		<li>
+			<a class="nav-item" href="/category/#vue.js">
+				<span class="name">vue.js</span>
+			</a>
+		</li>
+		
+		</nav>
+	</ul>
+</div>
+
+<div class="sidebar-item sidebar-footer">
+	<p>Powered by <a href="https://github.com/jekyll/jekyll">Jekyll</a></p>
+</div>
+		</div>
+		<div class="content">
+			<article class="post">
+	<header class="post-header">
+		<div class="post-title"> 
+			[Spring] Spring Web MVC 정리
+		</div>
+		<time class="post-date dt-published" datetime="2021-10-21T18:00:00+09:00" itemprop="datePublished">2021/10/21
+		</time>		
+	</header>
+
+	<div class="post-content">
+		<h1 id="6-spring-web-mvc-정리">6. Spring Web MVC 정리</h1>
+
+<blockquote>
+  <p>스프링에서 웹 프로젝트가 실행되는 순서, xml 파일들의 용도 구분</p>
+</blockquote>
+
+<h3 id="6-1-spring에서-웹-프로젝트가-실행되는-순서">6-1. Spring에서 웹 프로젝트가 실행되는 순서</h3>
+
+<p><img src="/assets/img/spring-16365260346711.png" alt="spring" /></p>
+
+<ol>
+  <li>Tomcat의 서버가 실행되고 web.xml 읽어들임</li>
+  <li>web.xml에 등록되어 있는 ContextLoaderListener가 생성</li>
+  <li>생성된 ContextLoaderListener가 root-context.xml을 로드</li>
+  <li>root-context.xml에 등록되어 있는 스프링 컨테이너가 구동되고, 이 때 개발자가 작성한 비즈니스 로직(Service) 부분과 DB 로직(DAO), VO(DTO) 객체들이 생성</li>
+  <li>클라이언트로부터 요청이 들어옴</li>
+  <li>DispatcherServlet이 생성되고 Front Controller의 역할을 수행하며, 실질적인 작업은 HandlerMapping(컨트롤러 매핑), ViewResolver(view 매핑)에서 이루어짐</li>
+  <li>DispatcherServlet은 servlet-context.xml을 로드</li>
+  <li>응답에 맞는 컨트롤러들이 동작하여 알맞은 작업을 처리</li>
+</ol>
+
+<h3 id="6-2-각-xml-파일의-용도-구분">6-2. 각 xml 파일의 용도 구분</h3>
+
+<ul>
+  <li>pom.xml : maven 설정 파일 정보</li>
+  <li>web.xml : 프로젝트에 대한 설정
+    <ul>
+      <li>context-param, listener : root-context.xml 연결</li>
+      <li>servlet, init-param : servlet-context.xml 연결</li>
+      <li>filter</li>
+    </ul>
+  </li>
+  <li>servlet-context.xml : 웹과 직접적으로 관련되어 있는 객체 및 설정
+    <ul>
+      <li>context-param - controller</li>
+      <li>viewResolver</li>
+      <li>interceptor</li>
+      <li>file-upload/download</li>
+      <li>resources</li>
+    </ul>
+  </li>
+  <li>root-context.xml : 웹과 직접적인 연관이 없는 객체 및 설정
+    <ul>
+      <li>dataSource</li>
+      <li>AOP</li>
+      <li>myBatis 관련 설정
+        <ul>
+          <li>sqlSession</li>
+          <li>sqlSessionFactoryBean</li>
+          <li>typeAliases</li>
+          <li>mapper</li>
+          <li>transactionManager</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+
+	</div>
+</article>
+		</div>
+	</div>
+</body>
+
+</html>

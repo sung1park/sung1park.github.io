@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+
+<html lang=" en"><head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1"><link type="application/atom+xml" rel="alternate" href="https://sung1park.github.io/feed.xml" title="Sungil" /><script async src="https://www.googletagmanager.com/gtag/js?id=G-P2CF8N6DNY"></script>
+<script>
+  window['ga-disable-G-P2CF8N6DNY'] = window.doNotTrack === "1" || navigator.doNotTrack === "1" || navigator.doNotTrack === "yes" || navigator.msDoNotTrack === "1";
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { dataLayer.push(arguments); }
+  gtag('js', new Date());
+
+  gtag('config', 'G-P2CF8N6DNY');
+</script></head>
+<style>
+	@import url(/assets/css/syntax/monokai.css);
+</style>
+<title>Sungil</title>
+<link href="/assets/css/style.css" rel="stylesheet">
+
+<body>
+	<div class="container">
+		<div class="sidebar">
+			<div class="sidebar-item sidebar-header">
+	<div class='sidebar-brand'>
+		<a href="/about/">Sungil</a>
+	</div>
+	<p class="lead">TIL 정리 블로그</p></div>
+
+<div class="sidebar-item sidebar-nav">
+	<ul class="nav">
+		<li class="nav-title">Categories</li>
+		<li>
+			<a class="nav-item" href="/">전체글</a>
+		</li>
+		
+		<li>
+			<a class="nav-item" href="/category/#spring">
+				<span class="name">spring</span>
+			</a>
+		</li>
+		
+		<li>
+			<a class="nav-item" href="/category/#vue.js">
+				<span class="name">vue.js</span>
+			</a>
+		</li>
+		
+		</nav>
+	</ul>
+</div>
+
+<div class="sidebar-item sidebar-footer">
+	<p>Powered by <a href="https://github.com/jekyll/jekyll">Jekyll</a></p>
+</div>
+		</div>
+		<div class="content">
+			<article class="post">
+	<header class="post-header">
+		<div class="post-title"> 
+			[Vue.js] Vuex
+		</div>
+		<time class="post-date dt-published" datetime="2021-11-15T18:00:00+09:00" itemprop="datePublished">2021/11/15
+		</time>		
+	</header>
+
+	<div class="post-content">
+		<h1 id="vuex">Vuex</h1>
+
+<blockquote>
+  <p>https://vuex.vuejs.org/kr/</p>
+</blockquote>
+
+<h2 id="introduction">Introduction</h2>
+
+<h3 id="vuex란">Vuex란?</h3>
+
+<ul>
+  <li>Vue.js 어플리케이션에 대한 <u>상태관리패턴 + 라이브러리</u></li>
+  <li>어플리케이션의 모든 Component의 <u>중앙 집중식 저장소</u> 역할</li>
+  <li>예측 가능한 방식으로 상태를 변경하도록 함</li>
+  <li>어플리케이션이 커지고 여러 구성 요소로 구성되는 경우 데이터를 공유하는 문제가 발생하는데, 이를 해결하기 위해 사용</li>
+</ul>
+
+<h3 id="상태관리패턴">상태관리패턴</h3>
+
+<h4 id="예시-vue-카운터-앱">예시 (Vue 카운터 앱)</h4>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">new</span> <span class="nx">Vue</span><span class="p">({</span>
+  <span class="c1">// State</span>
+  <span class="nx">data</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">{</span>
+      <span class="na">count</span><span class="p">:</span> <span class="mi">0</span>
+    <span class="p">}</span>
+  <span class="p">},</span>
+  <span class="c1">// View</span>
+  <span class="na">template</span><span class="p">:</span> <span class="s2">`
+    &lt;div&gt;8&lt;/div&gt;
+  `</span><span class="p">,</span>
+  <span class="c1">// Action</span>
+  <span class="na">methods</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nx">increment</span> <span class="p">()</span> <span class="p">{</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">count</span><span class="o">++</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">})</span>
+</code></pre></div></div>
+
+<p>#####</p>
+
+<h4 id="단방향-데이터-흐름">단방향 데이터 흐름</h4>
+
+<ul>
+  <li><strong>State</strong> : 앱을 작동하는 원본 소스</li>
+  <li><strong>View</strong> : State의 선언적 매핑</li>
+  <li><strong>Action</strong> : View에서 사용자 입력에 대해 responsive 하게 상태를 바꾸는 방법</li>
+</ul>
+
+<p><img src="/assets/img/image-20211115164502960.png" alt="image-20211115164502960" /></p>
+
+<h4 id="문제점">문제점</h4>
+
+<ul>
+  <li>여러 컴포넌트가 하나의 데이터를 <code class="highlighter-rouge">props</code>와 <code class="highlighter-rouge">$emit</code>으로 주고받는 경우, 코드가 복잡해지고 유지보수가 매우 어려워진다</li>
+</ul>
+
+<h4 id="vuex의-상태관리패턴">Vuex의 상태관리패턴</h4>
+
+<ul>
+  <li><strong>State</strong>를 싱글톤으로 관리</li>
+  <li>상태 관리에 특정 규칙을 적용해 코드의 구조와 유지 관리를 유용하게 함</li>
+</ul>
+
+<h3 id="vuex-설치">Vuex 설치</h3>
+
+<ul>
+  <li>
+    <p>NPM</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm <span class="nb">install </span>vuex <span class="nt">--save</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Vue-cli</p>
+
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vue add vuex
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3 id="vuex-사용">Vuex 사용</h3>
+
+<ul>
+  <li><code class="highlighter-rouge">main.js</code></li>
+</ul>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nx">Vue</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">vue</span><span class="dl">'</span><span class="p">;</span>
+<span class="k">import</span> <span class="nx">App</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">./App.vue</span><span class="dl">'</span><span class="p">;</span>
+<span class="k">import</span> <span class="nx">store</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">./store/store</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="nx">Vue</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">productionTip</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+
+<span class="k">new</span> <span class="nx">Vue</span><span class="p">({</span>
+  <span class="na">render</span><span class="p">:</span> <span class="p">(</span><span class="nx">h</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">h</span><span class="p">(</span><span class="nx">App</span><span class="p">),</span>
+  <span class="nx">store</span><span class="p">,</span>
+<span class="p">}).</span><span class="nx">$mount</span><span class="p">(</span><span class="dl">'</span><span class="s1">#app</span><span class="dl">'</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h2 id="핵심-컨셉">핵심 컨셉</h2>
+
+<blockquote>
+  <p>State, Getters, Mutations, Actions</p>
+
+  <p>MVC 패턴에서 Controller, Service, DAO의 관계와 비슷해보인다.</p>
+</blockquote>
+
+<p><img src="/assets/img/image-20211115165301975.png" alt="image-20211115165301975" /></p>
+
+<h4 id="state">State</h4>
+
+<ul>
+  <li>저장소에서 data 속성의 역할</li>
+  <li><code class="highlighter-rouge">this.$store.state.data_name</code>으로 State에 직접 접근할 수 있지만, state에 접근할 수 있는 것은 위의 다이어그램처럼 Mutations로 한정</li>
+</ul>
+
+<h4 id="getters">Getters</h4>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// store &gt; index.js</span>
+<span class="nx">getters</span><span class="p">:</span> <span class="p">{</span>
+  <span class="c1">// 복잡한 계산식을 처리 : computed</span>
+  <span class="nx">countMsg</span><span class="p">(</span><span class="nx">state</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// return state.count + '번 호출됨';</span>
+    <span class="kd">let</span> <span class="nx">msg</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">10번보다 </span><span class="dl">"</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">state</span><span class="p">.</span><span class="nx">count</span> <span class="o">&gt;</span> <span class="mi">10</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">msg</span> <span class="o">+=</span> <span class="dl">"</span><span class="s2">많이 </span><span class="dl">"</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+      <span class="nx">msg</span> <span class="o">+=</span> <span class="dl">"</span><span class="s2">적게 </span><span class="dl">"</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">msg</span> <span class="o">+</span> <span class="dl">"</span><span class="s2"> 호출됨(</span><span class="dl">"</span> <span class="o">+</span> <span class="nx">state</span><span class="p">.</span><span class="nx">count</span> <span class="o">+</span> <span class="dl">"</span><span class="s2">)</span><span class="dl">"</span><span class="p">;</span>
+  <span class="p">},</span>
+<span class="p">},</span>
+</code></pre></div></div>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// getter에 접근하는 곳</span>
+<span class="k">export</span> <span class="k">default</span> <span class="p">{</span>
+  <span class="na">computed</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nx">countMsg</span><span class="p">()</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">$store</span><span class="p">.</span><span class="nx">getters</span><span class="p">.</span><span class="nx">countMsg</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Vue 인스턴스의 <code class="highlighter-rouge">computed</code>와 같은 역할</li>
+  <li>state가 변한다면 내부 코드를 처리하여 반환하고, 그렇지 않으면 캐싱된 데이터를 반환</li>
+  <li>첫번째 인자는 무조건 ‘state’가 되어야한다</li>
+</ul>
+
+<h4 id="mapgetters">mapGetters</h4>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">mapGetters</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">vuex</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="k">export</span> <span class="k">default</span> <span class="p">{</span>
+  <span class="na">computed</span><span class="p">:</span> <span class="p">{</span>
+    <span class="p">...</span><span class="nx">mapGetters</span><span class="p">({</span>
+      <span class="na">countMsg</span><span class="p">:</span> <span class="dl">'</span><span class="s1">countMsg</span><span class="dl">'</span><span class="p">,</span>
+      <span class="na">msg1</span><span class="p">:</span> <span class="dl">'</span><span class="s1">msg1</span><span class="dl">'</span><span class="p">,</span>
+      <span class="na">msg2</span><span class="p">:</span> <span class="dl">'</span><span class="s1">msg2</span><span class="dl">'</span><span class="p">,</span>
+      <span class="na">msg3</span><span class="p">:</span> <span class="dl">'</span><span class="s1">msg3</span><span class="dl">'</span><span class="p">,</span>
+    <span class="p">}),</span>
+    <span class="c1">// ...mapGetters(["countMsg", "msg1", "msg2", "msg3"]),</span>
+  <span class="p">},</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<ul>
+  <li>여러 getter를 더 간단하게 호출할 수 있다</li>
+  <li>ES6의 Destructuring assignment 기능을 이용해 더 짧은 코드로 작성할 수 있다</li>
+</ul>
+
+<h4 id="mutations">Mutations</h4>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">mutations</span><span class="p">:</span> <span class="p">{</span>
+  <span class="nx">ADD_ONE</span><span class="p">(</span><span class="nx">state</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">state</span><span class="p">.</span><span class="nx">count</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="p">},</span>
+  <span class="nx">ADD_TEN_COUNT</span><span class="p">(</span><span class="nx">state</span><span class="p">,</span> <span class="nx">payload</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">state</span><span class="p">.</span><span class="nx">count</span> <span class="o">+=</span> <span class="nx">payload</span><span class="p">;</span>
+  <span class="p">},</span>
+  <span class="nx">ADD_OBJ_COUNT</span><span class="p">(</span><span class="nx">state</span><span class="p">,</span> <span class="nx">payload</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">state</span><span class="p">.</span><span class="nx">count</span> <span class="o">+=</span> <span class="nx">payload</span><span class="p">.</span><span class="nx">num</span><span class="p">;</span>
+  <span class="p">},</span>
+<span class="p">},</span>
+</code></pre></div></div>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">methods</span><span class="p">:</span> <span class="p">{</span>
+  <span class="nl">addCount</span><span class="p">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">count</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">$store</span><span class="p">.</span><span class="nx">commit</span><span class="p">(</span><span class="dl">'</span><span class="s1">ADD_ONE</span><span class="dl">'</span><span class="p">);</span>
+    <span class="c1">// this.$store.state.count++;</span>
+  <span class="p">},</span>
+  <span class="nx">addTenCount</span><span class="p">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">count</span> <span class="o">+=</span> <span class="mi">10</span><span class="p">;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">$store</span><span class="p">.</span><span class="nx">commit</span><span class="p">(</span><span class="dl">'</span><span class="s1">ADD_COUNT</span><span class="dl">'</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span>
+  <span class="p">},</span>
+  <span class="nx">addObjCount</span><span class="p">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">let</span> <span class="nx">num</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">round</span><span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">()</span> <span class="o">*</span> <span class="mi">100</span><span class="p">);</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">num</span><span class="p">);</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">count</span> <span class="o">+=</span> <span class="nx">num</span><span class="p">;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">$store</span><span class="p">.</span><span class="nx">commit</span><span class="p">(</span><span class="dl">'</span><span class="s1">ADD_OBJ_COUNT</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span> <span class="nx">num</span> <span class="p">});</span>
+  <span class="p">},</span>
+<span class="p">},</span>
+</code></pre></div></div>
+
+<ul>
+  <li><strong>동기</strong> method, 첫 번째 인자로 ‘state’를 받음</li>
+  <li>State에 직접 접근할 수 있는 유일한 방법</li>
+  <li><u>commit</u>으로 접근, 객체를 같이 넘길 수 있음</li>
+  <li>실무에서는 Actions와 구분하기 위해 이름을 대문자로 쓰는 편</li>
+</ul>
+
+<h4 id="mapmutations">mapMutations</h4>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">mapMutations</span><span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">vuex</span><span class="dl">"</span><span class="p">;</span>
+
+<span class="k">export</span> <span class="k">default</span> <span class="p">{</span>
+  <span class="p">...</span>
+  <span class="na">methods</span><span class="p">:</span> <span class="p">{</span>
+    <span class="p">...</span><span class="nx">mapMutations</span><span class="p">({</span>
+      <span class="na">addMOne</span><span class="p">:</span> <span class="dl">"</span><span class="s2">ADD_ONE</span><span class="dl">"</span><span class="p">,</span>
+      <span class="na">addMTenCount</span><span class="p">:</span> <span class="dl">"</span><span class="s2">ADD_TEN_COUNT</span><span class="dl">"</span><span class="p">,</span>
+      <span class="na">addMObjCount</span><span class="p">:</span> <span class="dl">"</span><span class="s2">ADD_OBJ_COUNT</span><span class="dl">"</span><span class="p">,</span>
+    <span class="p">}),</span>
+    <span class="na">addCount</span><span class="p">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">count</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+      <span class="c1">// this.$store.commit('addOne');</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">addMOne</span><span class="p">();</span>
+    <span class="p">},</span>
+    <span class="na">addTenCount</span><span class="p">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">count</span> <span class="o">+=</span> <span class="mi">10</span><span class="p">;</span>
+      <span class="c1">// this.$store.commit('addCount', 10);</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">addMTenCount</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+    <span class="p">},</span>
+    <span class="na">addObjCount</span><span class="p">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+      <span class="kd">let</span> <span class="nx">num</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">round</span><span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">()</span> <span class="o">*</span> <span class="mi">100</span><span class="p">);</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">count</span> <span class="o">+=</span> <span class="nx">num</span><span class="p">;</span>
+      <span class="c1">// this.$store.commit('addObjCount', { num });</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">addMObjCount</span><span class="p">({</span> <span class="nx">num</span> <span class="p">});</span>
+    <span class="p">},</span>
+  <span class="p">},</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<h4 id="actions">Actions</h4>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">actions</span><span class="p">:</span> <span class="p">{</span>
+  <span class="nx">asyncAddOne</span><span class="p">(</span><span class="nx">context</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">setTimeout</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="nx">context</span><span class="p">.</span><span class="nx">commit</span><span class="p">(</span><span class="dl">"</span><span class="s2">addOne</span><span class="dl">"</span><span class="p">);</span>
+    <span class="p">},</span> <span class="mi">2000</span><span class="p">);</span>
+  <span class="p">},</span>
+<span class="p">},</span>
+</code></pre></div></div>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">methods</span><span class="p">:</span> <span class="p">{</span>
+  <span class="nx">asyncCount</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">$store</span><span class="p">.</span><span class="nx">dispatch</span><span class="p">(</span><span class="dl">"</span><span class="s2">asyncAddOne</span><span class="dl">"</span><span class="p">);</span>
+  <span class="p">},</span>
+<span class="p">},</span>
+</code></pre></div></div>
+
+<ul>
+  <li><strong>비동기</strong> method, 첫 번째 인자로 ‘context’를 받음</li>
+  <li>비동기 작업의 결과를 적용하려고 할 때 사용</li>
+  <li>비동기 로직이 끝나고 mutations을 동기적으로 처리</li>
+  <li><u>dispatch</u>로 접근</li>
+</ul>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">actions</span><span class="p">:</span> <span class="p">{</span>
+  <span class="nx">createTodo</span><span class="p">({</span> <span class="nx">commit</span> <span class="p">},</span> <span class="nx">todoItem</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">commit</span><span class="p">(</span><span class="dl">'</span><span class="s1">CREATE_TODO</span><span class="dl">'</span><span class="p">,</span> <span class="nx">todoItem</span><span class="p">);</span>
+  <span class="p">},</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<ul>
+  <li>actions의 메서드의 첫 인자는 ‘context’이지만, 위처럼 객체 타입으로 ‘commit’을 직접 받아 사용할 수 있다</li>
+</ul>
+
+<h4 id="mapactions">mapActions</h4>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">mapActions</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">vuex</span><span class="dl">"</span><span class="p">;</span>
+
+<span class="k">export</span> <span class="k">default</span> <span class="p">{</span>
+  <span class="na">methods</span><span class="p">:</span> <span class="p">{</span>
+    <span class="p">...</span><span class="nx">mapActions</span><span class="p">([</span><span class="dl">"</span><span class="s2">asyncAddOne</span><span class="dl">"</span><span class="p">]),</span>
+    <span class="nx">asyncCount</span><span class="p">()</span> <span class="p">{</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">asyncAddOne</span><span class="p">();</span>
+    <span class="p">},</span>
+  <span class="p">},</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<h4 id="정리">정리</h4>
+
+<p><img src="/assets/img/vuex.png" alt="vuex" /></p>
+
+	</div>
+</article>
+		</div>
+	</div>
+</body>
+
+</html>

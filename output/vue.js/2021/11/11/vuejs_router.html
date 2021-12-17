@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+
+<html lang=" en"><head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1"><link type="application/atom+xml" rel="alternate" href="https://sung1park.github.io/feed.xml" title="Sungil" /><script async src="https://www.googletagmanager.com/gtag/js?id=G-P2CF8N6DNY"></script>
+<script>
+  window['ga-disable-G-P2CF8N6DNY'] = window.doNotTrack === "1" || navigator.doNotTrack === "1" || navigator.doNotTrack === "yes" || navigator.msDoNotTrack === "1";
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { dataLayer.push(arguments); }
+  gtag('js', new Date());
+
+  gtag('config', 'G-P2CF8N6DNY');
+</script></head>
+<style>
+	@import url(/assets/css/syntax/monokai.css);
+</style>
+<title>Sungil</title>
+<link href="/assets/css/style.css" rel="stylesheet">
+
+<body>
+	<div class="container">
+		<div class="sidebar">
+			<div class="sidebar-item sidebar-header">
+	<div class='sidebar-brand'>
+		<a href="/about/">Sungil</a>
+	</div>
+	<p class="lead">TIL 정리 블로그</p></div>
+
+<div class="sidebar-item sidebar-nav">
+	<ul class="nav">
+		<li class="nav-title">Categories</li>
+		<li>
+			<a class="nav-item" href="/">전체글</a>
+		</li>
+		
+		<li>
+			<a class="nav-item" href="/category/#spring">
+				<span class="name">spring</span>
+			</a>
+		</li>
+		
+		<li>
+			<a class="nav-item" href="/category/#vue.js">
+				<span class="name">vue.js</span>
+			</a>
+		</li>
+		
+		</nav>
+	</ul>
+</div>
+
+<div class="sidebar-item sidebar-footer">
+	<p>Powered by <a href="https://github.com/jekyll/jekyll">Jekyll</a></p>
+</div>
+		</div>
+		<div class="content">
+			<article class="post">
+	<header class="post-header">
+		<div class="post-title"> 
+			[Vue.js] Vue Router
+		</div>
+		<time class="post-date dt-published" datetime="2021-11-11T18:00:00+09:00" itemprop="datePublished">2021/11/11
+		</time>		
+	</header>
+
+	<div class="post-content">
+		<h1 id="vue-router">Vue Router</h1>
+
+<blockquote>
+  <p>Vue에서의 라우팅</p>
+</blockquote>
+
+<h3 id="vue-router-1">vue-router</h3>
+
+<ul>
+  <li>라우팅 : 웹 페이지 간 이동 방법</li>
+  <li>Vue.js의 공식 라우터</li>
+  <li>라우터는 컴포넌트와 매핑</li>
+  <li>Vue를 이용한 SPA(Single Page Application)를 제작할 때 유용</li>
+  <li>URL에 따라 컴포넌트를 연결하고 설정된 컴포넌트를 보여준다</li>
+</ul>
+
+<h3 id="vue-router-설치">vue-router 설치</h3>
+
+<ul>
+  <li>
+    <p>CDN</p>
+
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"&gt;&lt;/script&gt;
+&lt;script src="https://unpkg.com/vue-router/dist/vue-router.js"&gt;&lt;/script&gt;
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>NPM 방식</p>
+
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm install vue-router
+</code></pre></div>    </div>
+    <div class="language-vue highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import Vue from 'vue'
+import VueRouter from 'vue-router'
+  
+Vue.use(VueRouter)
+</code></pre></div>    </div>
+    <ul>
+      <li>모듈 시스템에서 사용하면 <code class="highlighter-rouge">Vue.use()</code>를 통해 명시적으로 라우터를 추가한다
+​</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="vue-router-연결">vue-router 연결</h3>
+
+<ul>
+  <li><code class="highlighter-rouge">new VueRouter()</code>를 통해 라우터 인스턴스를 생성하고 <code class="highlighter-rouge">routes</code> 옵션을 넘겨준다</li>
+</ul>
+
+<div class="language-vue highlighter-rouge"><div class="highlight"><pre class="highlight"><code>const Main = {
+  template: `<span class="nt">&lt;div&gt;</span>메인 페이지<span class="nt">&lt;/div&gt;</span>`,
+};
+const Board = {
+  template: `<span class="nt">&lt;div&gt;</span>자유 게시판<span class="nt">&lt;/div&gt;</span>`,
+}
+
+const router = new VueRouter({
+  routes: [
+    { path: '/', component: Main },
+    { path: '/board', component: Board },
+  ]
+})
+</code></pre></div></div>
+
+<h3 id="vue-router-이동-및-렌더링">vue-router 이동 및 렌더링</h3>
+
+<h5 id="router-link">router-link</h5>
+
+<div class="language-vue highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;router-link</span> <span class="na">to=</span><span class="s">"/"</span><span class="nt">&gt;&lt;/router-link&gt;</span>
+</code></pre></div></div>
+
+<ul>
+  <li>내비게이션을 위해 router-link 컴포넌트를 사용</li>
+  <li>속성은 <code class="highlighter-rouge">to</code>를 사용. <code class="highlighter-rouge">v-bind</code>를 이용해 Vue 객체의 데이터를 사용 가능</li>
+  <li>기본적으로 <code class="highlighter-rouge">&lt;a&gt;</code> 태그로 렌더링</li>
+</ul>
+
+<h5 id="router-view">router-view</h5>
+
+<div class="language-vue highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;router-view&gt;&lt;/router-view&gt;</span>
+</code></pre></div></div>
+
+<ul>
+  <li>현재 라우트에 맞는 컴포넌트가 렌더링 된다</li>
+</ul>
+
+<h3 id="예시">예시</h3>
+
+<h5 id="indexhtml">index.html</h5>
+
+<div class="language-vue highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"en"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">"viewport"</span> <span class="na">content=</span><span class="s">"width=device-width, initial-scale=1.0"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;title&gt;</span>Document<span class="nt">&lt;/title&gt;</span>
+    <span class="nt">&lt;</span><span class="k">style</span><span class="nt">&gt;</span>
+      <span class="nc">.router-link-exact-active</span> <span class="p">{</span>
+        <span class="nl">color</span><span class="p">:</span> <span class="no">red</span><span class="p">;</span>
+      <span class="p">}</span>
+    <span class="nt">&lt;/</span><span class="k">style</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;</span><span class="k">script</span> <span class="na">src=</span><span class="s">"https://unpkg.com/vue/dist/vue.js"</span><span class="nt">&gt;&lt;/</span><span class="k">script</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;</span><span class="k">script</span> <span class="na">src=</span><span class="s">"https://unpkg.com/vue-router/dist/vue-router.js"</span><span class="nt">&gt;&lt;/</span><span class="k">script</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;/head&gt;</span>
+
+  <span class="nt">&lt;body&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"app"</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;h1&gt;</span>Router<span class="nt">&lt;/h1&gt;</span>
+      <span class="nt">&lt;p&gt;</span>
+        <span class="nt">&lt;router-link</span> <span class="na">:to=</span><span class="s">"{name: 'main'}"</span><span class="nt">&gt;</span>HOME<span class="nt">&lt;/router-link&gt;</span>
+        <span class="nt">&lt;router-link</span> <span class="na">:to=</span><span class="s">"{name: 'board'}"</span><span class="nt">&gt;</span>게시판<span class="nt">&lt;/router-link&gt;</span>
+      <span class="nt">&lt;/p&gt;</span>
+      <span class="nt">&lt;router-view&gt;&lt;/router-view&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
+
+    <span class="nt">&lt;</span><span class="k">script</span> <span class="na">type=</span><span class="s">"module"</span> <span class="na">src=</span><span class="s">"app.js"</span><span class="nt">&gt;&lt;/</span><span class="k">script</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h5 id="appjs">app.js</h5>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nx">Main</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">./components/Main.js</span><span class="dl">"</span><span class="p">;</span>
+<span class="k">import</span> <span class="nx">Board</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">./components/Board.js</span><span class="dl">"</span><span class="p">;</span>
+<span class="k">import</span> <span class="nx">BoardDetail</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">./components/board/BoardDetail.js</span><span class="dl">"</span><span class="p">;</span>
+<span class="k">import</span> <span class="nx">BoardUpdate</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">./components/board/BoardUpdate.js</span><span class="dl">"</span><span class="p">;</span>
+<span class="k">import</span> <span class="nx">BoardWrite</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">./components/board/BoardWrite.js</span><span class="dl">"</span><span class="p">;</span>
+<span class="k">import</span> <span class="nx">BoardList</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">./components/board/BoardList.js</span><span class="dl">"</span><span class="p">;</span>
+
+<span class="c1">// 라우터 객체 생성</span>
+<span class="kd">const</span> <span class="nx">router</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">VueRouter</span><span class="p">({</span>
+  <span class="na">mode</span><span class="p">:</span> <span class="dl">"</span><span class="s2">history</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">routes</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="na">path</span><span class="p">:</span> <span class="dl">"</span><span class="s2">/</span><span class="dl">"</span><span class="p">,</span>
+      <span class="na">name</span><span class="p">:</span> <span class="dl">"</span><span class="s2">main</span><span class="dl">"</span><span class="p">,</span>
+      <span class="na">component</span><span class="p">:</span> <span class="nx">Main</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="na">path</span><span class="p">:</span> <span class="dl">"</span><span class="s2">/board</span><span class="dl">"</span><span class="p">,</span>
+      <span class="na">name</span><span class="p">:</span> <span class="dl">"</span><span class="s2">board</span><span class="dl">"</span><span class="p">,</span>
+      <span class="na">component</span><span class="p">:</span> <span class="nx">Board</span><span class="p">,</span>
+      <span class="na">redirect</span><span class="p">:</span> <span class="dl">"</span><span class="s2">/board/list</span><span class="dl">"</span><span class="p">,</span>
+      <span class="na">children</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+          <span class="na">path</span><span class="p">:</span> <span class="dl">"</span><span class="s2">list</span><span class="dl">"</span><span class="p">,</span>
+          <span class="na">name</span><span class="p">:</span> <span class="dl">"</span><span class="s2">boardlist</span><span class="dl">"</span><span class="p">,</span>
+          <span class="na">component</span><span class="p">:</span> <span class="nx">BoardList</span><span class="p">,</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+          <span class="na">path</span><span class="p">:</span> <span class="dl">"</span><span class="s2">write</span><span class="dl">"</span><span class="p">,</span>
+          <span class="na">name</span><span class="p">:</span> <span class="dl">"</span><span class="s2">boardwrite</span><span class="dl">"</span><span class="p">,</span>
+          <span class="na">component</span><span class="p">:</span> <span class="nx">BoardWrite</span><span class="p">,</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+          <span class="na">path</span><span class="p">:</span> <span class="dl">"</span><span class="s2">update/:no</span><span class="dl">"</span><span class="p">,</span>
+          <span class="na">name</span><span class="p">:</span> <span class="dl">"</span><span class="s2">boardupdate</span><span class="dl">"</span><span class="p">,</span>
+          <span class="na">component</span><span class="p">:</span> <span class="nx">BoardUpdate</span><span class="p">,</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+          <span class="na">path</span><span class="p">:</span> <span class="dl">"</span><span class="s2">detail/:no</span><span class="dl">"</span><span class="p">,</span>
+          <span class="na">name</span><span class="p">:</span> <span class="dl">"</span><span class="s2">boarddetail</span><span class="dl">"</span><span class="p">,</span>
+          <span class="na">component</span><span class="p">:</span> <span class="nx">BoardDetail</span><span class="p">,</span>
+        <span class="p">},</span>
+      <span class="p">],</span>
+    <span class="p">},</span>
+  <span class="p">],</span>
+<span class="p">});</span>
+
+<span class="c1">// Vue 인스턴스에 라우터 주입</span>
+<span class="kd">const</span> <span class="nx">app</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Vue</span><span class="p">({</span>
+  <span class="na">el</span><span class="p">:</span> <span class="dl">"</span><span class="s2">#app</span><span class="dl">"</span><span class="p">,</span>
+  <span class="nx">router</span><span class="p">,</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<h5 id="boardlistjs">BoardList.js</h5>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">export</span> <span class="k">default</span> <span class="p">{</span>
+  <span class="na">template</span><span class="p">:</span> <span class="s2">`&lt;div&gt;
+    &lt;ul&gt;
+      &lt;li v-for="i in 5"&gt;
+        &lt;router-link :to="'/board/detail/' + i"&gt;번 게시글&lt;/router-link&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+    &lt;router-link to="/board/write"&gt;등록&lt;/router-link&gt;
+  &lt;/div&gt;`</span><span class="p">,</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<ul>
+  <li>BoardList, BoardDetail, BoardWrite, BoardUpdate의 template를 import 하여 component로 사용한다</li>
+  <li>라우터 객체를 생성하고 Vue 인스턴스에 라우터를 주입한다</li>
+  <li>html에서 <code class="highlighter-rouge">&lt;router-view&gt;</code>를 이용해 라우트에 맞는 컴포넌트를 렌더링한다</li>
+  <li>라우트에 이름을 설정할 수 있고, 다른 곳에서 이름을 사용하여 부를 수 있다</li>
+  <li>중첩되는 라우트에 대해 <code class="highlighter-rouge">children</code>을 이용해 중복되는 부분의 반복을 줄일 수 있다</li>
+  <li><code class="highlighter-rouge">redirect</code>할 수 있다.</li>
+</ul>
+
+<h3 id="프로그래밍-방식-라우터">프로그래밍 방식 라우터</h3>
+
+<div class="language-vue highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$router.push('home')
+$router.push({ path: 'home' })
+$router.push({ name: 'boardview', params: {no: 3} })
+$router.push({ path: '/board', query: {pg: 1} })
+</code></pre></div></div>
+
+<ul>
+  <li>자바스크립트의 <code class="highlighter-rouge">location.href</code>에 대응되는 방식</li>
+  <li>화면 상에서 이벤트와 같은 것들에 사용할 수 있지만, 링크의 경우에는 <code class="highlighter-rouge">&lt;router-link&gt;</code>를 사용</li>
+  <li>Vue 객체 안의 method 같은 곳에서 주로 이용한다</li>
+</ul>
+
+<h3 id="history-mode">History mode</h3>
+
+<p><code class="highlighter-rouge">vue-router</code>의 기본 모드는 hash mode이다. URL 해시(#)를 사용해 전체 URL을 시뮬레이트 하여 URL이 변경될 때 페이지가 다시 로드 되지 않는다. 해시를 제거하기 위해 아래와 같이 <strong>history</strong> 모드를 사용할 수 있다.</p>
+
+<div class="language-vue highlighter-rouge"><div class="highlight"><pre class="highlight"><code>const router = new VueRouter({
+  mode: 'history',
+  routes: [...]
+})
+</code></pre></div></div>
+
+
+	</div>
+</article>
+		</div>
+	</div>
+</body>
+
+</html>
